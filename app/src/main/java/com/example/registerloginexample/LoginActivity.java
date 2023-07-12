@@ -1,4 +1,4 @@
-package com.example.loginpage;
+package com.example.registerloginexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -10,8 +10,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.registerloginexample.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

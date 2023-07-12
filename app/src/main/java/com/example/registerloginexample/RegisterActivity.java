@@ -1,4 +1,4 @@
-package com.example.loginpage;
+package com.example.registerloginexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.registerloginexample.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                             boolean success=jsonObject.getBoolean("success");
                             if(success){ //회원등록에 성공한 경우
                                 Toast.makeText(getApplicationContext(),"회원 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(RegisterActivity.this, com.example.registerloginexample.LoginActivity.class);
+                                Intent intent=new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }else{//회원등록에 실패한 경우
                                 Toast.makeText(getApplicationContext(),"회원 등록에 실패하였습니다.",Toast.LENGTH_SHORT).show();
