@@ -34,6 +34,29 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.android.volley:volley:1.2.0'
+    implementation 'com.google.android.material:material:1.9.0
+깃(Git)을 연결한 후 재생 버튼이 나타나지 않는 경우, 다음과 같은 가능한 원인과 해결 방법을 고려해 볼 수 있습니다:
+
+Gradle 빌드 동기화: 안드로이드 스튜디오에서는 프로젝트를 Gradle로 빌드하여 실행합니다. 깃 연결 후에는 Gradle 프로젝트를 동기화해야 할 수도 있습니다. 이를 위해 다음 단계를 수행해 보세요:
+
+안드로이드 스튜디오에서 상단 메뉴에서 "File"을 선택한 후 "Sync Project with Gradle Files"를 클릭합니다.
+Gradle 프로젝트 동기화가 완료되면 재생 버튼이 나타날 수 있습니다.
+빌드 구성 확인: 프로젝트의 빌드 구성 파일(build.gradle)에서 문제가 발생할 수 있습니다. 빌드 구성 파일을 확인하여 다음 사항을 확인해 보세요:
+
+applicationId 속성이 정확하게 설정되었는지 확인합니다. 올바른 애플리케이션 ID가 설정되어야 재생 버튼이 나타날 수 있습니다.
+defaultConfig 섹션에서 applicationId가 올바르게 설정되어 있는지 확인합니다.
+Manifest 파일 확인: 애플리케이션의 AndroidManifest.xml 파일을 확인하여 다음 사항을 확인해 보세요:
+
+intent-filter 요소가 LAUNCHER 카테고리와 MAIN 액션으로 설정되어 있는지 확인합니다. 이렇게 설정되어야 재생 버튼을 클릭하여 애플리케이션을 실행할 수 있습니다.
+액티비티가 올바른 패키지 경로로 정의되어 있는지 확인합니다. 패키지 경로와 액티비티 이름이 정확하지 않으면 재생 버튼이 나타나지 않을 수 있습니다.
+Run Configuration 확인: 재생 버튼이 나타나지 않는 경우, 실행 구성(Run Configuration)이 올바르게 설정되었는지 확인해 보세요:
+
+상단 메뉴에서 "Run" 또는 "Debug"를 선택한 후 "Edit Configurations"를 클릭합니다.
+실행 구성 목록에서 현재 프로젝트에 대한 구성을 선택합니다.
+확인해야 할 항목은 다음과 같습니다: 실행할 모듈, 액티비티, 디바이스 또는 에뮬레이터 설정 등입니다. 각 항목이 올바르게 설정되어 있는지 확인합니다.
+에러 로그 확인: Gradle 또는 실행 중에 발생하는 에러 로그를 확인하여 문제의 원인을 파악할 수 있습니다. "Gradle Console" 또는 "Logcat" 창을 열어 에러 메시지를 살펴보세요. 에러 메시지에서 어떤 문제가 발생하는지 파악하여 해결 방법을 찾을 수 있습니다.
+
+위의 단계를 따라가며 재생 버튼이 나타나지 않는 문제를 해결해 보세요. 문제가 지속되는 경우, 에러 메시지나 상황에 대한 자세한 정보를 제공하면 더 구체적인 도움을 드릴 수 있습니다.'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
