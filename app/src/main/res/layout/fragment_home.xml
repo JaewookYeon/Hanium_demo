@@ -7,11 +7,12 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/homeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:text="Home Fragment" />
+        android:text="Home Fragment"
+        android:textSize="30sp" />
 
 </LinearLayout>
