@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Loginpage"
+rootProject.name = "Hanium_demo"
 include ':app'
