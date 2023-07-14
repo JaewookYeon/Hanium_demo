@@ -47,7 +47,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/item_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -57,7 +57,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/totalTxt"
+                    android:id="@+id/itemTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
@@ -95,34 +95,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tax:"
-                    android:textColor="#6C6868"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/totalTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0"
-                    android:textColor="#6C6868"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,7 +106,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
