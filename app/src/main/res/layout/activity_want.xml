@@ -7,9 +7,12 @@
     tools:context=".Want">
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -154,8 +157,8 @@
                 android:id="@+id/myButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CheckOut"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp"
+                android:text="CheckOut" />
 
         </LinearLayout>
     </ScrollView>
