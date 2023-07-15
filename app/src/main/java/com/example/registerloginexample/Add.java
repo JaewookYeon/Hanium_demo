@@ -1,6 +1,7 @@
 package com.example.registerloginexample;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.FileProvider;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -26,14 +26,14 @@ import java.util.List;
 
 public class Add extends AppCompatActivity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 672;
 
     private ImageView photoImageView;
     private EditText productNameEditText;
     private EditText quantityEditText;
     private EditText expiryDateEditText;
     private Button takePhotoButton;
-    private Button btn_save;
+    private Button saveButton;
 
     private Uri photoUri;
 
@@ -47,7 +47,7 @@ public class Add extends AppCompatActivity {
         quantityEditText = findViewById(R.id.quantityEditText);
         expiryDateEditText = findViewById(R.id.expiryDateEditText);
         takePhotoButton = findViewById(R.id.takePhotoButton);
-        btn_save = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton);
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,26 +56,10 @@ public class Add extends AppCompatActivity {
             }
         });
 
-        btn_save.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String productName = productNameEditText.getText().toString();
-                String quantity = quantityEditText.getText().toString();
-                String expiryDate = expiryDateEditText.getText().toString();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("productName", productName);
-                bundle.putString("quantity", quantity);
-                bundle.putString("expiryDate", expiryDate);
-                bundle.putParcelable("photoUri", photoUri);
-
-                Frag2 frag2 = new Frag2();
-                frag2.setArguments(bundle);
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, frag2);
-                fragmentTransaction.commit();
+                saveProduct();
             }
         });
     }
@@ -104,37 +88,83 @@ public class Add extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             try {
                 photoUri = createImageUri();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            if (photoUri != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                if (photoUri != null) {
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "이미지 파일을 생성하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private Uri createImageUri() throws IOException {
-        String fileName = "temp_photo.jpg";
-        return Uri.parse(getExternalCacheDir().getPath() + "/" + fileName);
+    private Uri createImageUri() {
+        Uri uri = null;
+        try {
+            String fileName = "temp_photo.jpg";
+            File imagePath = new File(getExternalCacheDir(), fileName);
+            uri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", imagePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "이미지 파일을 생성하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+        }
+        return uri;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // 이미지 파일의 경로를 가져옵니다.
-            String imagePath = photoUri.getPath();
-
-            // 이미지 파일을 가져와서 photoImageView에 설정합니다.
-            setProductImage(new File(imagePath));
+            if (photoUri != null) {
+                setProductImage();
+            } else {
+                Toast.makeText(this, "이미지 파일이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private void setProductImage(File imageFile) {
-        if (imageFile != null && imageFile.exists()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            photoImageView.setImageBitmap(bitmap);
+    private void setProductImage() {
+        if (photoUri != null) {
+            try {
+                Bitmap sourceBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(photoUri));
+                int targetWidth = photoImageView.getWidth();
+                int targetHeight = photoImageView.getHeight();
+
+                int sourceWidth = sourceBitmap.getWidth();
+                int sourceHeight = sourceBitmap.getHeight();
+
+                float scaleWidth = (float) targetWidth / sourceWidth;
+                float scaleHeight = (float) targetHeight / sourceHeight;
+
+                // 이미지의 가로 세로 비율을 유지하면서 크기 조절
+                float scaleFactor = Math.min(scaleWidth, scaleHeight);
+                int finalWidth = (int) (sourceWidth * scaleFactor);
+                int finalHeight = (int) (sourceHeight * scaleFactor);
+
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(sourceBitmap, finalWidth, finalHeight, true);
+                photoImageView.setImageBitmap(resizedBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "이미지를 처리하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+    private void saveProduct() {
+        String productName = productNameEditText.getText().toString();
+        String quantity = quantityEditText.getText().toString();
+        String expiryDate = expiryDateEditText.getText().toString();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("productName", productName);
+        bundle.putString("quantity", quantity);
+        bundle.putString("expiryDate", expiryDate);
+        bundle.putParcelable("photoUri", photoUri);
+
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.registerloginexample;
 
-import android.app.Activity;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,19 +11,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Frag2 extends Fragment {
 
     private ImageView btn_want;
     private ImageView btn_add;
 
+    private static final int ADD_PRODUCT_REQUEST = 1;
+    private List<ProductItem> addedProductList;
+
+    private RecyclerView productRecyclerView;
+    private ProductAdapter productAdapter;
+
+    private LinearLayout previewLayout;
     private TextView pre_view;
     private ImageView productImageView;
+    private TextView productNameTextView;
+    private TextView quantityTextView;
+    private TextView expiryDateTextView;
 
     private Uri photoUri;
 
@@ -34,8 +54,12 @@ public class Frag2 extends Fragment {
 
         btn_want = view.findViewById(R.id.btn_want);
         btn_add = view.findViewById(R.id.btn_add);
+        previewLayout = view.findViewById(R.id.previewLinearLayout);
         pre_view = view.findViewById(R.id.previewTextView);
         productImageView = view.findViewById(R.id.productImageView);
+        productNameTextView = view.findViewById(R.id.productNameTextView);
+        quantityTextView = view.findViewById(R.id.quantityTextView);
+        expiryDateTextView = view.findViewById(R.id.expiryDateTextView);
 
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,46 +73,57 @@ public class Frag2 extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Add.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADD_PRODUCT_REQUEST);
             }
         });
 
-        if (getArguments() != null) {
-            String productName = getArguments().getString("productName");
-            String quantity = getArguments().getString("quantity");
-            String expiryDate = getArguments().getString("expiryDate");
-
-            String previewText = "상품 이름: " + productName + "\n수량: " + quantity + "\n유통기한: " + expiryDate;
-            pre_view.setText(previewText);
-
-            // Add.java에서 가져온 이미지 파일을 설정
-            if (photoUri != null) {
-                try {
-                    Bitmap photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
-                    productImageView.setImageBitmap(photoBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        addedProductList = new ArrayList<>();
+        productRecyclerView = view.findViewById(R.id.productRecyclerView);
+        productAdapter = new ProductAdapter(addedProductList);
+        productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        productRecyclerView.setAdapter(productAdapter);
 
         return view;
     }
 
-    public void setPhotoUri(Uri uri) {
-        photoUri = uri;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            try {
-                Bitmap photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
-                productImageView.setImageBitmap(photoBitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == ADD_PRODUCT_REQUEST && resultCode == RESULT_OK && data != null) {
+            String productName = data.getStringExtra("productName");
+            String quantity = data.getStringExtra("quantity");
+            String expiryDate = data.getStringExtra("expiryDate");
+            photoUri = data.getParcelableExtra("photoUri");
+
+            ProductItem productItem = new ProductItem(productName, quantity, expiryDate, photoUri);
+            addedProductList.add(0, productItem); // 새로운 항목을 리스트의 맨 앞에 추가
+            productAdapter.notifyItemInserted(0); // 어댑터에 항목 추가 알림
+            updatePreview(productItem);
+            productRecyclerView.scrollToPosition(0); // 스크롤을 맨 위로 이동
+        }
+    }
+
+
+
+    private void updatePreview(ProductItem productItem) {
+        if (addedProductList.isEmpty()) {
+            previewLayout.setVisibility(View.GONE);
+        } else {
+            previewLayout.setVisibility(View.VISIBLE);
+            pre_view.setText("상품 이름: " + productItem.getProductName() + "\n수량: " + productItem.getQuantity() + "\n유통기한: " + productItem.getExpiryDate());
+
+            if (productItem.getImageUri() != null) {
+                try {
+                    Bitmap photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), productItem.getImageUri());
+                    productImageView.setImageBitmap(photoBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                productImageView.setImageDrawable(null);
             }
         }
     }
+
 }

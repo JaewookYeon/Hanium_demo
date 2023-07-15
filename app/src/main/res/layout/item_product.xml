@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/productImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/productImageView"
+        android:layout_alignParentTop="true"
+        android:textColor="#131313"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/quantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/productImageView"
+        android:layout_below="@id/productNameTextView"
+        android:textColor="#131313"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/expiryDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/productImageView"
+        android:layout_below="@id/quantityTextView"
+        android:textColor="#131313"
+        android:textSize="14sp" />
+
+</RelativeLayout>
