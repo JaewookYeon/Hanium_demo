@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Items Total:"
+                    android:text="Count:"
                     android:textColor="#6C6868"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -60,7 +60,7 @@
                     android:id="@+id/itemTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0"
+                    android:text="개"
                     android:textColor="#6C6868"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Delivery Services:"
+                    android:text="Items Total:"
                     android:textColor="#6C6868"
                     android:textSize="18sp"
                     android:textStyle="bold" />

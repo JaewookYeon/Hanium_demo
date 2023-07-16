@@ -32,6 +32,7 @@ public class ProductItem {
     }
 
     public Uri getImageResId() {
-        return getImageUri();
+            return getImageUri();
     }
+
 }

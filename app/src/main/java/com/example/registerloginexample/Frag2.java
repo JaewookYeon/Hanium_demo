@@ -61,6 +61,7 @@ public class Frag2 extends Fragment {
         quantityTextView = view.findViewById(R.id.quantityTextView);
         expiryDateTextView = view.findViewById(R.id.expiryDateTextView);
 
+
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +80,7 @@ public class Frag2 extends Fragment {
 
         addedProductList = new ArrayList<>();
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
-        productAdapter = new ProductAdapter(addedProductList);
+        productAdapter = new ProductAdapter(addedProductList,getContext());
         productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         productRecyclerView.setAdapter(productAdapter);
 
@@ -111,7 +112,9 @@ public class Frag2 extends Fragment {
             previewLayout.setVisibility(View.GONE);
         } else {
             previewLayout.setVisibility(View.VISIBLE);
-            pre_view.setText("상품 이름: " + productItem.getProductName() + "\n수량: " + productItem.getQuantity() + "\n유통기한: " + productItem.getExpiryDate());
+            productNameTextView.setText("상품 이름: " + productItem.getProductName());
+            quantityTextView.setText("수량: " + productItem.getQuantity());
+            expiryDateTextView.setText("유통기한: " + productItem.getExpiryDate());
 
             if (productItem.getImageUri() != null) {
                 try {

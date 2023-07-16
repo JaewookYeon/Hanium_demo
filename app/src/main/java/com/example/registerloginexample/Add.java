@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +64,7 @@ public class Add extends AppCompatActivity {
             }
         });
     }
+
 
     private void requestCameraPermission() {
         PermissionListener permissionListener = new PermissionListener() {
@@ -167,4 +169,5 @@ public class Add extends AppCompatActivity {
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
+
 }
