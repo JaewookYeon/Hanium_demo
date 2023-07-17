@@ -1,5 +1,9 @@
 package com.example.registerloginexample;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,42 +11,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frag4 extends Fragment implements View.OnClickListener {
+public class BoardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Nullable
+    private RecyclerView mMainRecyclerView;
+
+    private MainAdapter mAdapter;
+    private List<Board> mBoardList;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag4, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_board);
 
-        RecyclerView mMainRecyclerView = view.findViewById(R.id.main_recycler_view);
-        view.findViewById(R.id.main_write_button).setOnClickListener(this);
+        mMainRecyclerView = findViewById(R.id.main_recycler_view);
 
-        List<Board> mBoardList = new ArrayList<>();
-        mBoardList.add(new Board(null,"지금 시간 새벽 4시", null,"주바킴"));
-        mBoardList.add(new Board(null,"자고싶다", null,"민서"));
+        findViewById(R.id.main_write_button).setOnClickListener(this);
+
+        mBoardList = new ArrayList<>();
         mBoardList.add(new Board(null,"반갑습니다 여러분", null,"android"));
         mBoardList.add(new Board(null,"안녕", null,"Server"));
         mBoardList.add(new Board(null,"Hello", null,"Java"));
         mBoardList.add(new Board(null,"Hi", null,"php"));
         mBoardList.add(new Board(null,"ㅋㅋ", null,"Python"));
 
-        MainAdapter mAdapter = new MainAdapter(mBoardList);
+        mAdapter= new MainAdapter(mBoardList);
         mMainRecyclerView.setAdapter(mAdapter);
 
-        return view;
     }
 
     @Override
     public void onClick(View v){
-        startActivity(new Intent(getContext(), WriteActivity.class));
+        startActivity(new Intent(this, WriteActivity.class));
     }
 
     private class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
