@@ -1,0 +1,110 @@
+[33mcommit 09aa0c8d0e7e8d528dd894253ea0407c9957653e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: MinseoK1m <pushseo.kim@gmail.com>
+Date:   Mon Jul 17 13:16:44 2023 +0900
+
+    게시판, 마이페이지
+
+[33mcommit 90c95220d0be4b46236f884a1a75af58cdb84b33[m
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Mon Jul 17 12:15:04 2023 +0900
+
+    홈 수정
+
+[33mcommit 78faed9e995bb9fec4322aef07c5be10e69ee154[m
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Mon Jul 17 11:29:05 2023 +0900
+
+    레이아웃 수정
+
+[33mcommit 22194fb1eb610fdc3d03cd64a3686d788745bd66[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Sun Jul 16 20:14:29 2023 +0900
+
+    상품 추가
+
+[33mcommit cb47dc0375a8eec526449232b41bd03b7718d3d3[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Sat Jul 15 21:57:37 2023 +0900
+
+    상품 추가 완성
+
+[33mcommit b0d2ff8375d60137d0ee369dabf5182c2aaaac8e[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Sat Jul 15 00:28:49 2023 +0900
+
+    공유 화면에서 저장 누르면 frag2로 넘어가는 거랑 미리보기에 추가되게 수정하기
+
+[33mcommit 6e01261fd8945ae2f90e2c69eb5c7b48b8d6c849[m
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Fri Jul 14 17:05:49 2023 +0900
+
+    메뉴바 합치기 1
+
+[33mcommit 3df49be5e70eaaa32d202590088821ca9ec3fadd[m
+Merge: ab87a1c 5d11419
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Fri Jul 14 14:38:53 2023 +0900
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit ab87a1c8a43f099b441624101e5b0c9ef33c865b[m
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Fri Jul 14 14:38:44 2023 +0900
+
+    메뉴바
+
+[33mcommit 5d1141941b8016c3b5e857e25116926d98c0a224[m
+Merge: a8d6c5a ccc7637
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Thu Jul 13 22:24:55 2023 +0900
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit a8d6c5a58fa328ae90d440fb7ded949c0bb5bc7e[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Thu Jul 13 22:23:00 2023 +0900
+
+    찜 목록 2:05:00
+
+[33mcommit ccc7637f3cec935b619ffcf4aec692ab78e7b8d2[m
+Merge: f056788 929d3f7
+Author: JaewookYeon <jwyeon318@naver.com>
+Date:   Thu Jul 13 18:49:33 2023 +0900
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit f056788c4c3c8a482d94a540d44fc9f61428cb5c[m
+Author: JaewookYeon <jwyeon318@naver.com>
+Date:   Thu Jul 13 18:49:19 2023 +0900
+
+    제목 변경
+
+[33mcommit 929d3f7e1b6a40a4dd77fe19576e1a45bcb6e512[m
+Author: LYUHAERIM <haerim0228@skuniv.ac.kr>
+Date:   Thu Jul 13 16:10:36 2023 +0900
+
+    커밋이욤
+
+[33mcommit 5cdd6ee5e3b2c56341277365ff85b7892a9ef213[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Wed Jul 12 20:24:46 2023 +0900
+
+    수정의 수정
+
+[33mcommit b87f97362cdcf6a372e41dd58a3c5f659f76bf80[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Wed Jul 12 18:03:25 2023 +0900
+
+    수정
+
+[33mcommit 01acd63dfcfe2ba6e5eb9aa507e2788a2bbf0b93[m
+Author: kyeongaYU <ruddk658@naver.com>
+Date:   Wed Jul 12 17:31:45 2023 +0900
+
+    로그인
+
+[33mcommit e74df319e38d77ea7684da6a8777dd3665d5b33b[m
+Author: JaewookYeon <jwyeon318@naver.com>
+Date:   Wed Jul 12 16:44:56 2023 +0900
+
+    Initial commit

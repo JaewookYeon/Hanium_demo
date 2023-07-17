@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183999603944",
+    "project_id": "hanium-demo",
+    "storage_bucket": "hanium-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183999603944:android:d0d5ef2a250a1a1953955d",
+        "android_client_info": {
+          "package_name": "com.example.registerloginexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183999603944-pj01qe0ltmekg4bus5uk1v6agh9jir4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDouiOztDOIyS8Q_rOwmolfPd07t_ZC6Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183999603944-pj01qe0ltmekg4bus5uk1v6agh9jir4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

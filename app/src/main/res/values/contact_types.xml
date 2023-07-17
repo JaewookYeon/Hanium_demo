@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="contact_types">
+        <item>도난</item>
+        <item>불친절</item>
+        <item>오류</item>
+        <item>기타</item>
+    </string-array>
+</resources>
