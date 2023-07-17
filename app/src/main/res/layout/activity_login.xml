@@ -11,36 +11,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="108dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="아이디"
         android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_pass2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="비밀번호"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/et_id2"
-        app:layout_constraintStart_toStartOf="@+id/et_id2"
-        app:layout_constraintTop_toBottomOf="@+id/et_id2" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:text="로그인"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="@+id/et_pass2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_pass2"
         app:layout_constraintTop_toBottomOf="@+id/et_pass2" />
 
@@ -50,10 +39,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="회원가입"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_login"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.016" />
+
+    <EditText
+        android:id="@+id/et_pass2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="@+id/et_id2"
+        app:layout_constraintStart_toStartOf="@+id/et_id2"
+        app:layout_constraintTop_toBottomOf="@+id/et_id2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
