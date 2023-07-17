@@ -1,10 +1,12 @@
 package com.example.registerloginexample;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 public class Frag3 extends Fragment {
 
+
+    private TextView announcementText;
     private View view;
     ViewFlipper v_fllipper;
 
@@ -20,6 +24,17 @@ public class Frag3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag3, container, false);
+
+        announcementText = view.findViewById(R.id.announcementText);
+        announcementText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                announcementText.setSelected(true);
+            }
+        }, 1000);
+        announcementText.setHorizontallyScrolling(true);
+        announcementText.setMovementMethod(new ScrollingMovementMethod());
+
         int images[] = {
                 R.drawable.test_img01,
                 R.drawable.test_img02,
