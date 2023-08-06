@@ -13,9 +13,10 @@
         android:layout_margin="10dp"
         android:ems="10"
         android:gravity="right"
-        android:hint="입력기"
+        android:hint="비밀번호를 입력하세요"
         android:inputType="textPersonName"
-        android:paddingTop="50dp" />
+        android:paddingTop="50sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <LinearLayout
         android:layout_width="match_parent"
