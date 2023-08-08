@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         frag4 = new Frag4();
         frag5 = new Frag5();
         setFrag(2); //첫 프래그먼트화면 홈화면(3)
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
-
     }
 
     //프래그먼트 교체가 일어나는 실행문
