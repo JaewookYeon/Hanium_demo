@@ -40,26 +40,26 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //EditText에 현재 입력되어 있는 값을 얻어온다.
-                String login_id=et_id2.getText().toString();
-                String login_password=et_pass2.getText().toString();
+                // EditText에 현재 입력되어 있는 값을 얻어온다.
+                String login_id = et_id2.getText().toString();
+                String login_password = et_pass2.getText().toString();
 
-                Response.Listener<String> responseListener= new Response.Listener<String>() {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if (success) { //로그인에 성공한 경우
+                            if (success) { // 로그인에 성공한 경우
                                 String userID = jsonObject.getString("login_id");
                                 String userPass = jsonObject.getString("login_password");
 
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("login_id", login_id);
-                                intent.putExtra("login_password", login_password);
+                                intent.putExtra("login_id", userID);
+                                intent.putExtra("login_password", userPass);
                                 startActivity(intent);
-                            } else {//로그인에 실패한 경우
+                            } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -68,10 +68,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
-                LoginRequest loginRequest=new LoginRequest(login_id,login_password,responseListener);
-                RequestQueue queue= Volley.newRequestQueue(LoginActivity.this);
+                LoginRequest loginRequest = new LoginRequest(login_id, login_password, responseListener); // 변경된 부분
+                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
             }
         });
+
+
     }
 }

@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView; //바텀 네이게이션 뷰
+    private BottomNavigationView bottomNavigationView; // 바텀 네이게이션 뷰
     private FragmentManager fm;
     private FragmentTransaction ft;
     private Frag1 frag1;
@@ -21,12 +21,19 @@ public class MainActivity extends AppCompatActivity {
     private Frag3 frag3;
     private Frag4 frag4;
     private Frag5 frag5;
+
+    // 사용자 아이디 데이터
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavi);
+
+        // 사용자 아이디 데이터를 Intent에서 받아옴
+        userId = getIntent().getStringExtra("login_id");
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -46,24 +53,30 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(3);
                         break;
                     case R.id.action_myPage:
+                        // Frag5.java
+                        Bundle bundle = new Bundle();
+                        bundle.putString("login_id", userId);
+                        frag5.setArguments(bundle);
                         setFrag(4);
                         break;
                 }
                 return true;
             }
         });
+
         frag1 = new Frag1();
         frag2 = new Frag2();
         frag3 = new Frag3();
         frag4 = new Frag4();
         frag5 = new Frag5();
-        setFrag(2); //첫 프래그먼트화면 홈화면(3)
+
+        setFrag(2); // 첫 프래그먼트화면 홈화면(3)
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
-    //프래그먼트 교체가 일어나는 실행문
+    // 프래그먼트 교체가 일어나는 실행문
     private void setFrag(int n) {
-        fm =getSupportFragmentManager();
+        fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         switch (n) {
             case 0:
@@ -86,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
                 break;
-
         }
     }
 }

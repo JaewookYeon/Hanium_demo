@@ -67,6 +67,8 @@
             android:name=".MainActivity"
             android:exported="true" />
 
+
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.registerloginexample.fileprovider"
