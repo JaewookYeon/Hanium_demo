@@ -30,6 +30,7 @@ public class Frag5 extends Fragment {
     private Button buttonEditProfile;
     private Button buttonContact;
     private Button buttonLogout;
+    private String login_id;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -75,40 +76,30 @@ public class Frag5 extends Fragment {
         });
 
         // 서버에서 사용자 이름 가져오기
-        String url = "http://ruddk658.dothome.co.kr/frag5.php"; // get_name.php 파일이 위치한 URL로 변경
+        String url = "http://ruddk658.dothome.co.kr/frag5.php?login_id=" + login_id;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
-                    // Frag5.java
                     try {
-                        JSONObject jsonObject = new JSONObject(response.toString());
-                        if (jsonObject.has("name")) { // 필드 존재 여부 확인
-                            String userName = jsonObject.getString("name");
-                            TextView nameTextView = view.findViewById(R.id.nameTextView);
-                            nameTextView.setText(userName);
-                        } else {
-                            // 필드가 존재하지 않을 경우 처리
-                            Log.e("ServerResponse", "Name field not found in JSON");
-                        }
+                        String userName = response.getString("name");
+                        TextView nameTextView = view.findViewById(R.id.nameTextView);
+                        nameTextView.setText(userName);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // 에러 처리: 에러 내용을 로그로 출력
                         Log.e("ServerResponse", "Error: " + error.toString());
                         error.printStackTrace();
                     }
                 });
 
-        // Volley 요청을 큐에 추가
         Volley.newRequestQueue(getContext()).add(request);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String login_id = bundle.getString("login_id");
+            login_id = bundle.getString("login_id");
             Log.d("Frag5", "Received login_id: " + login_id);
         }
 
