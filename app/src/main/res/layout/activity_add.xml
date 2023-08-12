@@ -5,43 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 이미지 뷰 -->
     <ImageView
         android:id="@+id/photoImageView"
         android:layout_width="208dp"
         android:layout_height="184dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 냉장고 번호 입력란 -->
     <EditText
-        android:id="@+id/productNameEditText"
+        android:id="@+id/refEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
-        android:hint="상품 이름"
+        android:hint="냉장고 번호(1 ~ 9)"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photoImageView" />
 
+    <!-- 상품 이름 입력란 -->
     <EditText
-        android:id="@+id/expiryDateEditText"
+        android:id="@+id/productNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
-        android:hint="유통기한"
+        android:hint="상품 이름"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantityEditText" />
+        app:layout_constraintTop_toBottomOf="@id/refEditText" />
 
+    <!-- 수량 입력란 -->
     <EditText
         android:id="@+id/quantityEditText"
         android:layout_width="match_parent"
@@ -56,6 +61,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productNameEditText" />
 
+    <!-- 유통기한 선택 텍스트 -->
+    <TextView
+        android:id="@+id/expiryDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:text="유통기한: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@id/expiryDateButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantityEditText" />
+
+    <!-- 유통기한 선택 버튼 -->
+    <Button
+        android:id="@+id/expiryDateButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="유통기한 선택"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/expiryDateTextView"
+        app:layout_constraintTop_toBottomOf="@id/quantityEditText" />
+
+    <!-- 사진 찍기 버튼 -->
     <Button
         android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
@@ -64,16 +98,17 @@
         android:text="사진 찍기"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expiryDateEditText" />
+        app:layout_constraintTop_toBottomOf="@id/expiryDateButton" />
 
+    <!-- 저장 버튼 -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         android:text="저장"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/takePhotoButton" />
 

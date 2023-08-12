@@ -67,6 +67,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImageView;
+
+        TextView refIdTextView;
         TextView productNameTextView;
         TextView quantityTextView;
         TextView expiryDateTextView;
@@ -74,6 +76,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            refIdTextView=itemView.findViewById(R.id.refIdTextView);
             productImageView = itemView.findViewById(R.id.productImageView);
             productNameTextView = itemView.findViewById(R.id.productNameTextView);
             quantityTextView = itemView.findViewById(R.id.quantityTextView);

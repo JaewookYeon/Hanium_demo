@@ -44,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
                 final String name=et_name.getText().toString();
                 final String phone=et_phone.getText().toString();
                 final String address=et_address.getText().toString();
-                //int userAge=Integer.parseInt(et_age.getText().toString());
 
                 Response.Listener<String> responseListener=new Response.Listener<String>() {
                     @Override
