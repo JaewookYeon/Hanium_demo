@@ -75,28 +75,6 @@ public class Frag5 extends Fragment {
             }
         });
 
-        // 서버에서 사용자 이름 가져오기
-        String url = "http://ruddk658.dothome.co.kr/frag5.php?login_id=" + login_id;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        String userName = response.getString("name");
-                        TextView nameTextView = view.findViewById(R.id.nameTextView);
-                        nameTextView.setText(userName);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("ServerResponse", "Error: " + error.toString());
-                        error.printStackTrace();
-                    }
-                });
-
-        Volley.newRequestQueue(getContext()).add(request);
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             login_id = bundle.getString("login_id");
@@ -128,5 +106,32 @@ public class Frag5 extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // 서버에서 사용자 이름 가져오기
+        String url = "http://ruddk658.dothome.co.kr/frag5.php?login_id=" + login_id;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        String userName = response.getString("name");
+                        TextView nameTextView = getView().findViewById(R.id.nameTextView);
+                        nameTextView.setText(userName);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("ServerResponse", "Error: " + error.toString());
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(getContext()).add(request);
     }
 }
