@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:ems="10"
-        android:gravity="right"
-        android:hint="비밀번호를 입력하세요"
+        android:hint="비밀번호를 입력하세요 "
+        android:gravity="center"
         android:inputType="textPersonName"
-        android:paddingTop="50sp"
+        android:paddingTop="30sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <LinearLayout
@@ -131,13 +131,13 @@
         android:paddingRight="2dp">
 
         <Button
-            android:id="@+id/empty"
+            android:id="@+id/btn_C"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:layout_weight="1"
-            android:shadowColor="#FFFFFF"
-            android:visibility="invisible" />
+            android:text="C"
+            android:textSize="40dp" />
 
         <Button
             android:id="@+id/btn0"
@@ -149,13 +149,13 @@
             android:textSize="40dp" />
 
         <Button
-            android:id="@+id/btn_clear"
+            android:id="@+id/btn_AC"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
-            android:text="clear"
-            android:textSize="16sp" />
+            android:text="AC"
+            android:textSize="40dp" />
     </LinearLayout>
 
     <Button
@@ -167,5 +167,5 @@
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:text="Ok"
-        android:textSize="35dp" />
+        android:textSize="40dp" />
 </LinearLayout>
