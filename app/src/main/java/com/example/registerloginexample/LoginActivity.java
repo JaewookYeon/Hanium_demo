@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,11 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         btn_register2 = findViewById(R.id.btn_register2);
 
-        //회원가입 버튼을 클릭 시 수행
+        // 회원가입 버튼을 클릭 시 수행
         btn_register2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -54,26 +53,27 @@ public class LoginActivity extends AppCompatActivity {
                                 String userID = jsonObject.getString("login_id");
                                 String userPass = jsonObject.getString("login_password");
 
+                                // "custId" 키가 존재하면 해당 값을 가져옴
+                                Integer custId = jsonObject.optInt("custId", -1);
+
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("login_id", userID);
                                 intent.putExtra("login_password", userPass);
+                                intent.putExtra("custId", custId);
                                 startActivity(intent);
                             } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                return;
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     }
                 };
-                LoginRequest loginRequest = new LoginRequest(login_id, login_password, responseListener); // 변경된 부분
+                LoginRequest loginRequest = new LoginRequest(login_id, login_password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
             }
         });
-
-
     }
 }

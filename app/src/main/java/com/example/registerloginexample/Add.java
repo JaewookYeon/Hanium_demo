@@ -4,12 +4,12 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +53,10 @@ public class Add extends AppCompatActivity {
     private Button saveButton;
     private Button expiryDateButton;
 
+    private String imagePath;
+
+    private int refId;
+
     private Uri photoUri;
     private Calendar selectedDate = Calendar.getInstance();
     private int custId; // 로그인 시 받아온 custid 값을 저장
@@ -70,6 +74,15 @@ public class Add extends AppCompatActivity {
         takePhotoButton = findViewById(R.id.takePhotoButton);
         saveButton = findViewById(R.id.saveButton);
         expiryDateButton = findViewById(R.id.expiryDateButton);
+
+        Intent intent = getIntent();
+        int receivedCustId = intent.getIntExtra("custId", -1);
+
+        // 넘어온 custId를 사용하여 custId 값 설정
+        if (receivedCustId != -1) {
+            custId = receivedCustId;
+            Log.d("AddActivity", "Received custId: " + custId);
+        }
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,10 +104,6 @@ public class Add extends AppCompatActivity {
                 saveProduct();
             }
         });
-
-        // 로그인 정보 가져오기
-        SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        custId = sharedPreferences.getInt("cust_id", -1);
     }
 
     private void requestCameraPermission() {
@@ -235,40 +244,59 @@ public class Add extends AppCompatActivity {
     }
 
     private void saveProduct() {
+        int refId = Integer.parseInt(refIdEditText.getText().toString());
         String productName = productNameEditText.getText().toString();
         String quantity = quantityEditText.getText().toString();
         String expiryDate = expiryDateText.getText().toString();
-        String imagePath = "uploads/temp_photo.jpg";
+        String imagePath = "upload/temp_photo.jpg";
 
         // 데이터 유효성 검사
-        if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty()) {
+        if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty()||refId<=0||!isValidImagePath(imagePath)) {
             Toast.makeText(Add.this, "모든 필수 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 로그인 정보가 없는 경우
-        if (custId == -1) {
-            showConfirmationDialog(productName, quantity, expiryDate, imagePath);
+        // 로그인 상태를 확인하고, 로그인이 되어 있을 때만 제품 저장을 시도합니다.
+        if (custId != -1&&refId>0) {
+            saveProductToDatabase(custId, refId,productName, quantity, expiryDate, imagePath);
         } else {
-            saveProductToDatabase(custId, productName, quantity, expiryDate, imagePath);
+            // 로그인이 되어있지 않을 때 처리
+            showLoginRequiredDialog(productName, quantity, expiryDate, imagePath);
         }
     }
 
-    private void showConfirmationDialog(final String productName, final String quantity, final String expiryDate, final String imagePath) {
+    private boolean isValidImagePath(String path) {
+        String[] validExtensions = {".jpg", ".jpeg", ".png"};
+
+        // 파일 경로가 유효한 확장자로 끝나는지 확인
+        for (String extension : validExtensions) {
+            if (path.toLowerCase().endsWith(extension)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void showLoginRequiredDialog(final String productName, final String quantity, final String expiryDate, final String imagePath) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("로그인 정보 없음")
-                .setMessage("로그인 정보가 없습니다. 제품을 저장하시겠습니까?")
-                .setPositiveButton("저장", new DialogInterface.OnClickListener() {
+        builder.setTitle("로그인이 필요합니다")
+                .setMessage("제품을 저장하려면 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")
+
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        saveProductToDatabase(-1, productName, quantity, expiryDate, imagePath);
+                        // 로그인 페이지로 이동하는 코드 작성
+                        Intent intent = new Intent(Add.this, LoginActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("취소", null)
                 .show();
     }
 
-    private void saveProductToDatabase(int custId, String productName, String quantity, String expiryDate, String imagePath) {
+
+    private void saveProductToDatabase(int custId, int refId, String productName, String quantity, String expiryDate, String imagePath) {
         String url = "http://ruddk658.dothome.co.kr/Add.php";
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -300,7 +328,7 @@ public class Add extends AppCompatActivity {
         };
 
         // 서버로 데이터 전송을 위한 요청 객체 생성
-        AddRequest addRequest = new AddRequest(custId, productName, quantity, expiryDate, imagePath, responseListener, errorListener);
+        AddRequest addRequest = new AddRequest(custId,refId, productName, quantity, expiryDate, imagePath, responseListener, errorListener);
 
         // Volley 요청 큐에 요청 추가
         RequestQueue requestQueue = Volley.newRequestQueue(Add.this);
