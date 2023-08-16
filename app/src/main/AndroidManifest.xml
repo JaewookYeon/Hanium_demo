@@ -60,6 +60,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VerifyIdentityActivity"
+            android:exported="false">
+        </activity>
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

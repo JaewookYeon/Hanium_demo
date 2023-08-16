@@ -1,0 +1,87 @@
+<!-- custom_image_dialog.xml -->
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 사전에 정의된 이미지를 그리드 레이아웃으로 표시 -->
+        <GridLayout
+            android:id="@+id/imageGrid"
+            android:layout_width="match_parent"
+            android:layout_height="209dp"
+            android:columnCount="2"
+            android:padding="16dp"
+            android:rowCount="2">
+
+            <!-- 각 이미지를 정방형으로 표시하도록 설정 -->
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp">
+
+                <!-- 이미지뷰에 테두리 속성을 적용하고, 배경은 투명으로 설정 -->
+                <ImageView
+                    android:id="@+id/icBoy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_border"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_boy" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp">
+
+                <!-- 이미지뷰에 테두리 속성을 적용하고, 배경은 투명으로 설정 -->
+                <ImageView
+                    android:id="@+id/icGirl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_border"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_girl" />
+
+            </FrameLayout>
+
+
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/selectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="확인" />
+
+            <!-- 간격 추가 -->
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취소" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

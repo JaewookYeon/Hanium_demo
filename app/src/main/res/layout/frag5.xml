@@ -1,4 +1,5 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +34,6 @@
                     android:id="@+id/profileImageView"
                     android:layout_width="110dp"
                     android:layout_height="105dp"
-                    android:src="@drawable/ic_boy"
                     app:civ_border_color="#C3C3C3"
                     app:civ_border_overlay="false"
                     app:civ_border_width="2dp"
@@ -74,7 +74,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.73"
+                    app:layout_constraintHorizontal_bias="0.933"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.495" />
@@ -93,91 +93,155 @@
             android:layout_height="1dp"
             android:background="#CCCCCC" />
 
-        <!-- 정보 수정 버튼 -->
 
-        <!-- 구분선 -->
+    <!-- 정보 수정 버튼 -->
+    <LinearLayout
+        android:id="@+id/layout_editUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:elevation="0dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_edit_user" />
+
         <Button
             android:id="@+id/my_editUser"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:elevation="0dp"
-            android:gravity="left"
-            android:text="정보수정                                       > "
+            android:gravity="start|center_vertical"
+            android:text="정보수정"
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
+
+    </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC" />
+    <!-- 문의하기 버튼 -->
+    <LinearLayout
+        android:id="@+id/layout_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:elevation="0dp">
 
-        <!-- 문의하기 버튼 -->
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_contact" />
+
         <Button
             android:id="@+id/my_contact"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="문의하기                                       >"
-            android:gravity="left"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:elevation="0dp"
+            android:gravity="start|center_vertical"
+            android:text="문의하기"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
-        <!-- 구분선 -->
+    </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC" />
-
         <!-- 신고하기 버튼 -->
-        <Button
-            android:id="@+id/my_report"
+        <LinearLayout
+            android:id="@+id/layout_report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="신고하기                                       >"
-            android:gravity="left"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:background="@android:color/transparent"
-            android:elevation="0dp"
-            tools:ignore="HardcodedText" />
+            android:elevation="0dp">
 
-        <!-- 구분선 -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_report" />
+
+            <Button
+                android:id="@+id/my_report"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:gravity="start|center_vertical"
+                android:text="신고하기"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC" />
-
         <!-- 로그아웃 버튼 -->
-
-        <!-- 구분선 -->
-        <Button
-            android:id="@+id/my_logout"
+        <LinearLayout
+            android:id="@+id/layout_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
-            android:elevation="0dp"
-            android:gravity="left"
-            android:text="로그아웃                                       >"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            tools:ignore="HardcodedText" />
+            android:elevation="0dp">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_logout" />
+
+            <Button
+                android:id="@+id/my_logout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:gravity="start|center_vertical"
+                android:text="로그아웃"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!-- 구분선 -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC" />
 
     </LinearLayout>
+
 </ScrollView>
