@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText et_id, et_pass, et_pass2, et_name, et_nickname, et_phone, et_address;
-    private Button btn_register, btn_doubleCheck;
+    private Button btn_register, btn_doubleCheck, btn_doubleCheck2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         // 회원가입 버튼 클릭 시 수행
         btn_register = findViewById(R.id.btn_register);
         btn_doubleCheck = findViewById(R.id.btn_doubleCheck);
+        btn_doubleCheck2 = findViewById(R.id.btn_doubleCheck2);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override

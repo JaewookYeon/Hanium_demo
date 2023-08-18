@@ -60,10 +60,10 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:src="@drawable/person1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textView6"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/person1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -73,8 +73,8 @@
                 android:layout_marginTop="4dp"
                 android:text="2. 공유"
                 android:textColor="#131313"
-                android:textStyle="bold"
                 android:textSize="10sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -85,10 +85,10 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:src="@drawable/person2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textView7"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/person2" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -98,8 +98,8 @@
                 android:layout_marginTop="4dp"
                 android:text="3. 마음냉장고"
                 android:textColor="#131313"
-                android:textStyle="bold"
                 android:textSize="10sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageView2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -110,10 +110,10 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:src="@drawable/person3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textView9"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/person3" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -124,7 +124,7 @@
 
             <ImageButton
                 android:id="@+id/btn_want"
-                android:layout_width="59dp"
+                android:layout_width="57dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="#ececec"
                 android:paddingStart="10dp"
