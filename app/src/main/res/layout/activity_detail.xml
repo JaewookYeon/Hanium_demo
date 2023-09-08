@@ -30,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageText" />
+        app:layout_constraintTop_toBottomOf="@id/productImageText"
+        android:fontFamily="@font/nanumsquareneoregular"/>
 
     <TextView
         android:id="@+id/expiryDateText"
@@ -42,7 +43,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantityText" />
+        app:layout_constraintTop_toBottomOf="@id/quantityText"
+        android:fontFamily="@font/nanumsquareneoregular"/>
 
     <TextView
         android:id="@+id/quantityText"
@@ -54,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productNameText" />
+        app:layout_constraintTop_toBottomOf="@id/productNameText"
+        android:fontFamily="@font/nanumsquareneoregular"/>
 
     <Button
         android:id="@+id/button2"
@@ -64,6 +67,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="123dp"
         android:text="꺼내기"
+        android:fontFamily="@font/nanumsquareneobold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/expiryDateText" />
@@ -76,6 +80,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="22dp"
         android:text="찜하기"
+        android:fontFamily="@font/nanumsquareneobold"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/expiryDateText" />

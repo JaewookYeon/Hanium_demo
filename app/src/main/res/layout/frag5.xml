@@ -71,7 +71,7 @@
                     android:layout_height="34dp"
                     android:text=""
                     android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/nanumsquareneobold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.933"
@@ -121,6 +121,7 @@
             android:elevation="0dp"
             android:gravity="start|center_vertical"
             android:text="정보수정"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -158,47 +159,13 @@
             android:elevation="0dp"
             android:gravity="start|center_vertical"
             android:text="문의하기"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#CCCCCC" />
         <!-- 신고하기 버튼 -->
-        <LinearLayout
-            android:id="@+id/layout_report"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:elevation="0dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_report" />
-
-            <Button
-                android:id="@+id/my_report"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                android:gravity="start|center_vertical"
-                android:text="신고하기"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -230,6 +197,7 @@
                 android:elevation="0dp"
                 android:gravity="start|center_vertical"
                 android:text="로그아웃"
+                android:fontFamily="@font/nanumsquareneoregular"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />

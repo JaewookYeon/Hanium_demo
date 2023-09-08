@@ -36,10 +36,8 @@ public class Frag5 extends Fragment {
 
     private Button buttonEditProfile;
     private Button buttonContact;
-    private Button buttonReport;
     private Button buttonLogout;
     private String login_id;
-    private String login_password;
     private static final int PICK_IMAGE_REQUEST_CODE = 123; // 임의의 숫자로 설정
     private CircleImageView profileImageView;
     private Uri selectedImageUri; // 선택한 이미지의 Uri 저장
@@ -59,8 +57,6 @@ public class Frag5 extends Fragment {
         buttonEditProfile = layoutEditUser.findViewById(R.id.my_editUser);
         LinearLayout layoutContact = view.findViewById(R.id.layout_contact);
         buttonContact = layoutContact.findViewById(R.id.my_contact);
-        LinearLayout layoutReport = view.findViewById(R.id.layout_report);
-        buttonReport = layoutReport.findViewById(R.id.my_report);
         LinearLayout layoutLogout = view.findViewById(R.id.layout_logout);
         buttonLogout = layoutLogout.findViewById(R.id.my_logout);
 

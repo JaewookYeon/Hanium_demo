@@ -10,7 +10,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="아이디"
+        android:textSize="18sp"
+        android:fontFamily="@font/nanumsquareneobold"
+        android:padding="16dp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:padding="16dp"
+        android:text=""
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호"
+        android:fontFamily="@font/nanumsquareneobold"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        tools:ignore="HardcodedText" />
+
+
+    <!-- 이름, 닉네임, 전화번호, 주소 항목 추가 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="이름"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="16dp"
@@ -21,23 +58,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이름을 입력하세요"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:padding="16dp"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="나이"
+        android:text="닉네임"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="16dp"
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/editTextAge"
+        android:id="@+id/editTextNickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="나이를 입력하세요"
+        android:hint="닉네임을 입력하세요"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:padding="16dp"
         tools:ignore="HardcodedText" />
 
@@ -46,6 +86,7 @@
         android:layout_height="wrap_content"
         android:text="전화번호"
         android:textSize="18sp"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textStyle="bold"
         android:padding="16dp"
         tools:ignore="HardcodedText" />
@@ -54,7 +95,27 @@
         android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:hint="전화번호를 입력하세요"
+        android:padding="16dp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주소"
+        android:fontFamily="@font/nanumsquareneobold"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/editTextAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="주소를 입력하세요"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:padding="16dp"
         tools:ignore="HardcodedText" />
 
@@ -63,6 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="수정하기"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textSize="18sp"
         android:layout_margin="16dp"
         tools:ignore="HardcodedText" />

@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="[문의 종류]"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"
         tools:ignore="HardcodedText" />
@@ -19,6 +20,7 @@
         android:layout_width="286dp"
         android:layout_height="51dp"
         android:layout_below="@id/textViewType"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:layout_marginBottom="16dp" />
 
     <TextView
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerType"
         android:text="문의 내용:"
+        android:fontFamily="@font/nanumsquareneobold"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"
         tools:ignore="HardcodedText" />
@@ -41,6 +44,7 @@
         android:minLines="5"
         android:gravity="top"
         android:hint="문의 내용을 입력하세요."
+        android:fontFamily="@font/nanumsquareneoregular"
         tools:ignore="HardcodedText" />
 
     <Button
@@ -49,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextContent"
         android:text="문의하기"
+        android:fontFamily="@font/nanumsquareneobold"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>

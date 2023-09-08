@@ -22,7 +22,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // EditText와 Button을 findViewById를 통해 연결합니다.
         editTextName = findViewById(R.id.editTextName);
-        editTextAge = findViewById(R.id.editTextAge);
         editTextPhone = findViewById(R.id.editTextPhone);
         buttonSave = findViewById(R.id.buttonSave); // 버튼 초기화 추가
 
