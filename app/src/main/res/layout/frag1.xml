@@ -16,19 +16,20 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="28dp"
             android:text="  나의 냉장고"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="2dp" />
 
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="362dp"
             android:layout_height="417dp"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="108dp"
             android:layout_marginEnd="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
@@ -40,7 +41,7 @@
             android:id="@+id/lockerButton"
             android:layout_width="132dp"
             android:layout_height="123dp"
-            android:layout_marginBottom="76dp"
+            android:layout_marginBottom="112dp"
             android:backgroundTint="#DBDDDC"
             android:text="Open"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -49,7 +50,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.561"
+            app:layout_constraintHorizontal_bias="0.548"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
