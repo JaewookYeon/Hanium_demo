@@ -100,7 +100,6 @@ public class Frag5 extends Fragment {
         }
 
 
-
         buttonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,5 +290,4 @@ public class Frag5 extends Fragment {
         // 선택한 이미지뷰의 테두리 제거
         imageView.setBackgroundResource(0);
     }
-
 }
