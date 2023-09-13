@@ -11,6 +11,25 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="푸쉐"
+        app:titleTextColor="@color/black"
+        app:titleTextAppearance="@font/nanumsquareneobold"
+        android:layout_gravity="center"
+        android:id="@+id/toolbar_title"
+        android:textSize="30sp"
+        />
+    </androidx.appcompat.widget.Toolbar>
+
+
     <TextView
         android:id="@+id/announcementText"
         android:layout_width="match_parent"
@@ -81,12 +100,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="210dp"
-            android:layout_height="56dp"
+            android:layout_width="213dp"
+            android:layout_height="53dp"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="184dp"
-            android:text="공유냉장고란?"
             android:fontFamily="@font/nanumsquareneoregular"
+            android:text="공유냉장고란?"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/imageView4"

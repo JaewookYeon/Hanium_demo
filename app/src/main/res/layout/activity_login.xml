@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:fontFamily="@font/nanumsquareneoregular"
@@ -44,8 +44,8 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="255dp"
+        android:layout_height="51dp"
         android:layout_marginStart="56dp"
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="134dp"
@@ -85,9 +85,9 @@
 
     <TextView
         android:id="@+id/btn_findPass1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_width="119dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="80dp"
         android:fontFamily="@font/nanumsquareneoregular"
         android:text="비밀번호 찾기"
