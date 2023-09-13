@@ -32,11 +32,11 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="  나의 냉장고"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/nanumsquareneoregular"
+            android:text="  나의 냉장고"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="28sp"
             android:textStyle="bold"

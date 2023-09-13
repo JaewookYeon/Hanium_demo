@@ -6,17 +6,32 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#C7E1F4"
+        android:ems="10"
+        android:fontFamily="@font/nanumsquareneoregular"
+        android:gravity="center"
+        android:text="보관함 비밀번호"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="38sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/displayNumber"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="25dp"
         android:ems="10"
         android:fontFamily="@font/nanumsquareneoregular"
         android:gravity="center"
         android:hint="비밀번호를 입력하세요 "
         android:inputType="textPassword"
-        android:paddingTop="30sp"
+        android:paddingTop="60sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <LinearLayout
