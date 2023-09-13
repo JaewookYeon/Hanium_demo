@@ -59,6 +59,7 @@ public class Add extends AppCompatActivity {
     private Uri photoUri;
     private Calendar selectedDate = Calendar.getInstance();
     private int custId; // 로그인 시 받아온 custid 값을 저장
+    private int fk_food_custid; // 수정: fk_food_custid 값을 저장
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,9 @@ public class Add extends AppCompatActivity {
             custId = receivedCustId;
             Log.d("AddActivity", "Received custId: " + custId);
         }
+
+        // 수정: 넘어온 fk_food_custid 값을 설정
+        fk_food_custid = intent.getIntExtra("fk_food_custid", -1);
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,13 +252,13 @@ public class Add extends AppCompatActivity {
 
         // 로그인 상태를 확인하고, 로그인이 되어 있을 때만 제품 저장을 시도합니다.
         if (custId != -1 && refId > 0) {
-            saveProductToDatabase(custId, refId, productName, quantity, expiryDate, imagePath);
+            // 수정: fk_food_custid 값을 AddRequest에 전달
+            saveProductToDatabase(fk_food_custid, refId, productName, quantity, expiryDate, imagePath);
         } else {
             // 로그인이 되어있지 않을 때 처리
             showLoginRequiredDialog(productName, quantity, expiryDate, imagePath);
         }
     }
-
 
     private boolean isValidImagePath(String path) {
         String[] validExtensions = {".jpg", ".jpeg", ".png"};
@@ -286,8 +290,7 @@ public class Add extends AppCompatActivity {
                 .show();
     }
 
-
-    private void saveProductToDatabase(int custId, int refId, String productName, String quantity, String expiryDate, String imagePath) {
+    private void saveProductToDatabase(int fk_food_custid, int refId, String productName, String quantity, String expiryDate, String imagePath) {
         String url = "http://3.209.169.0/Add.php";
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -319,7 +322,7 @@ public class Add extends AppCompatActivity {
         };
 
         // 서버로 데이터 전송을 위한 요청 객체 생성
-        AddRequest addRequest = new AddRequest(custId,refId, productName, quantity, expiryDate, imagePath, responseListener, errorListener);
+        AddRequest addRequest = new AddRequest(fk_food_custid, refId, productName, quantity, expiryDate, imagePath, responseListener, errorListener);
 
         // Volley 요청 큐에 요청 추가
         RequestQueue requestQueue = Volley.newRequestQueue(Add.this);
