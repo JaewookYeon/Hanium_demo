@@ -100,7 +100,6 @@ public class Frag5 extends Fragment {
         }
 
 
-
         buttonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +134,7 @@ public class Frag5 extends Fragment {
         super.onResume();
 
         // 서버에서 사용자 정보 가져오기
-        String url = "http://ruddk658.dothome.co.kr/frag5.php?login_id=" + login_id;
+        String url = "http://3.209.169.0/frag5.php?login_id=" + login_id;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
@@ -291,5 +290,4 @@ public class Frag5 extends Fragment {
         // 선택한 이미지뷰의 테두리 제거
         imageView.setBackgroundResource(0);
     }
-
 }

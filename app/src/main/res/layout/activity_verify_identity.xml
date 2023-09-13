@@ -18,6 +18,7 @@
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:inputType="textPassword"
             android:importantForAccessibility="yes" />
 
@@ -27,9 +28,9 @@
         android:id="@+id/buttonVerify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="확인"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp"
+        android:text="확인" />
 
 </LinearLayout>
