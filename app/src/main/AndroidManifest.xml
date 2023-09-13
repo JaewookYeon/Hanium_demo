@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,7 +22,9 @@
         android:theme="@style/Theme.Hanium_demo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".lockerDesActivity"
+            android:exported="false" />
         <activity
             android:name=".lockerActivity"
             android:exported="false" />
@@ -60,21 +61,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogoutActivity"
+        <activity
+            android:name=".LogoutActivity"
             android:exported="false" />
         <activity
             android:name=".VerifyIdentityActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

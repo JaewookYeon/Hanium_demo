@@ -8,42 +8,36 @@
 
     <EditText
         android:id="@+id/et_id"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="365dp"
         android:ems="10"
         android:hint="아이디"
         android:inputType="text"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toStartOf="@+id/btn_doubleCheck"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintTop_toTopOf="@+id/btn_doubleCheck" />
 
     <EditText
         android:id="@+id/et_pass"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="348dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="text"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/et_id"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_id"
-        app:layout_constraintTop_toBottomOf="@+id/et_id"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
     <EditText
         android:id="@+id/et_pass2"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="비밀번호 확인"
         android:inputType="textPassword"
@@ -54,9 +48,9 @@
 
     <EditText
         android:id="@+id/et_name"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="이름"
         android:inputType="text"
@@ -67,41 +61,40 @@
 
     <EditText
         android:id="@+id/et_nickname"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="닉네임"
         android:inputType="text"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_doubleCheck2"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/et_name"
+        app:layout_constraintStart_toStartOf="@+id/et_name"
         app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <EditText
         android:id="@+id/et_phone"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="전화번호"
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/et_nickname"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_nickname"
         app:layout_constraintTop_toBottomOf="@+id/et_nickname" />
 
     <EditText
         android:id="@+id/et_address"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="주소"
         android:inputType="text"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
         app:layout_constraintStart_toStartOf="@+id/et_phone"
         app:layout_constraintTop_toBottomOf="@+id/et_phone" />
 
@@ -109,39 +102,32 @@
         android:id="@+id/btn_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="8dp"
         android:text="회원가입"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/et_address"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/et_address" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_address"
+        app:layout_constraintVertical_bias="0.492" />
 
     <Button
         android:id="@+id/btn_doubleCheck"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
         android:text="중복확인"
-        app:layout_constraintBottom_toTopOf="@+id/btn_doubleCheck2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/et_id"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_doubleCheck2"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="232dp"
+        android:layout_height="wrap_content"
         android:text="중복확인"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@+id/btn_doubleCheck" />
+        app:layout_constraintTop_toTopOf="@+id/et_nickname" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
