@@ -102,7 +102,7 @@ public class Frag2 extends Fragment {
             String expiryDate = data.getStringExtra("expiryDate");
             photoUri = data.getParcelableExtra("photoUri");
 
-            // Create a local variable to check for duplicate refId
+
             boolean isDuplicateRefId = false;
             for (ProductItem item : addedProductList) {
                 if (item.getRefId() == refId) {

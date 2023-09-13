@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,8 +55,6 @@ public class Add extends AppCompatActivity {
     private Button expiryDateButton;
 
     private String imagePath;
-
-    private int refId;
 
     private Uri photoUri;
     private Calendar selectedDate = Calendar.getInstance();
@@ -129,7 +128,13 @@ public class Add extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             try {
-                photoUri = createImageUri();
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                String imageFileName = "JPEG_" + timeStamp + ".jpg";
+                imagePath = imageFileName;
+
+                File imagePathFile = new File(getExternalCacheDir(), imageFileName);
+                photoUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", imagePathFile);
+
                 if (photoUri != null) {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
@@ -159,20 +164,6 @@ public class Add extends AppCompatActivity {
                 Toast.makeText(this, "이미지 파일을 생성하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private Uri createImageUri() {
-        Uri uri = null;
-        try {
-            String fileName = "temp_photo.jpg";
-            File imagePath = new File(getExternalCacheDir(), fileName);
-            uri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", imagePath);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "이미지 파일을 생성하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-        }
-        return uri;
     }
 
     @Override
@@ -248,22 +239,22 @@ public class Add extends AppCompatActivity {
         String productName = productNameEditText.getText().toString();
         String quantity = quantityEditText.getText().toString();
         String expiryDate = expiryDateText.getText().toString();
-        String imagePath = "upload/temp_photo.jpg";
 
         // 데이터 유효성 검사
-        if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty()||refId<=0||!isValidImagePath(imagePath)) {
+        if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty() || refId <= 0 || !isValidImagePath(imagePath)) {
             Toast.makeText(Add.this, "모든 필수 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // 로그인 상태를 확인하고, 로그인이 되어 있을 때만 제품 저장을 시도합니다.
-        if (custId != -1&&refId>0) {
-            saveProductToDatabase(custId, refId,productName, quantity, expiryDate, imagePath);
+        if (custId != -1 && refId > 0) {
+            saveProductToDatabase(custId, refId, productName, quantity, expiryDate, imagePath);
         } else {
             // 로그인이 되어있지 않을 때 처리
             showLoginRequiredDialog(productName, quantity, expiryDate, imagePath);
         }
     }
+
 
     private boolean isValidImagePath(String path) {
         String[] validExtensions = {".jpg", ".jpeg", ".png"};

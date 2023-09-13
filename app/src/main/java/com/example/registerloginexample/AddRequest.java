@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddRequest extends StringRequest {
-    private static final String URL = "http://ruddk658.dothome.co.kr/Add.php";
+    private static final String URL = "http://3.209.169.0/Add.php";
     private Map<String, String> params;
 
-    public AddRequest(int custId,int refId, String productName, String quantity, String expiryDate, String imagePath,
+    public AddRequest(int custId, int refId, String productName, String quantity, String expiryDate, String imagePath,
                       Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.POST, URL, listener, errorListener);
 

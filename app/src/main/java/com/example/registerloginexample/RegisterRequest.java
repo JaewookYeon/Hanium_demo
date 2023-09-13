@@ -22,7 +22,6 @@ public class RegisterRequest extends StringRequest {
         map.put("name",name);
         map.put("phone",phone);
         map.put("address",address);
-        //map.put("userAge",userAge +"");
     }
 
     @Nullable
