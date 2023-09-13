@@ -25,6 +25,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:text=" ※공지사항※  한이음 프로젝트 화이팅♥ 한이음은 왜 한이음일까 가나다라마바사 에헤이"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="20sp" />
 
@@ -62,6 +63,7 @@
             android:layout_marginBottom="204dp"
             android:background="#0000BCD4"
             android:text="[금주의 인기게시물]\n 제목: 한이음\n내용: AI도 먹잘알\n작성자: 경아유혜림류민서킴"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:textColor="#000000"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
@@ -84,6 +86,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="184dp"
             android:text="공유냉장고란?"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/imageView4"
@@ -100,6 +103,7 @@
             android:layout_marginEnd="38dp"
             android:layout_marginBottom="158dp"
             android:text="공유냉장고는 누구나 자유롭게 음식을 채우거나 가져갈 수 있는 냉장고입니다. 음식과 식재료를 넣어두면 필요한 사람은 무료로 가져갈 수 있어요. 공유냉장고를 이용하면 버려지는 음식을 줄이고, 취약계층에게도 도움이 된답니다."
+            android:fontFamily="@font/nanumsquareneoregular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"

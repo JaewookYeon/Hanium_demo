@@ -26,6 +26,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="[금주의 인기게시물]\n 제목: 한이음\n내용: AI도 먹잘알\n작성자: 경아유혜림류민서킴"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:textColor="#000000"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
