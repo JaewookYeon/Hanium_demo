@@ -60,9 +60,8 @@ public class VerifyIdentityActivity extends AppCompatActivity {
         });
     }
 
-    private boolean verifyPassword(String loginId, String enteredPassword) {
-
-        String url = "http://ruddk658.dothome.co.kr/verify.php";
+    private boolean verifyPassword(final String loginId, final String enteredPassword) {
+        String url = "http://3.209.169.0/verify.php";
 
         Log.d("TAG", "Login ID: " + loginId);
         Log.d("TAG", "Entered Password: " + enteredPassword);
@@ -76,26 +75,23 @@ public class VerifyIdentityActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, requestData, new Response.Listener<JSONObject>() {
-
-
-
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     String status = response.getString("status");
                     if ("success".equals(status)) {
                         // 비밀번호 일치
-                        Toast.makeText(VerifyIdentityActivity.this, "본인 확인되었습니다.", Toast.LENGTH_SHORT).show();
+                        showSuccessToast();
                         Intent editProfileIntent = new Intent(VerifyIdentityActivity.this, EditProfileActivity.class);
                         editProfileIntent.putExtra("login_id", loginId);
                         startActivity(editProfileIntent);
                         finish(); // 현재 액티비티 종료
                     } else if ("failure".equals(status)) {
                         // 비밀번호 불일치
-                        Toast.makeText(VerifyIdentityActivity.this, "본인 확인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        showFailureToast();
                     } else if ("user_not_found".equals(status)) {
                         // 사용자 없음
-                        Toast.makeText(VerifyIdentityActivity.this, "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        showUserNotFoundToast();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -105,11 +101,31 @@ public class VerifyIdentityActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // 에러 처리
-                Toast.makeText(VerifyIdentityActivity.this, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                showNetworkErrorToast();
             }
         });
 
+        // 서버 요청을 큐에 추가
         Volley.newRequestQueue(this).add(request);
+
+        // 여기서는 비밀번호 일치 여부를 판단하므로 일단 false를 반환합니다.
         return false;
+    }
+
+
+    private void showSuccessToast() {
+        Toast.makeText(VerifyIdentityActivity.this, "본인 확인되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showFailureToast() {
+        Toast.makeText(VerifyIdentityActivity.this, "본인 확인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showUserNotFoundToast() {
+        Toast.makeText(VerifyIdentityActivity.this, "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showNetworkErrorToast() {
+        Toast.makeText(VerifyIdentityActivity.this, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
     }
 }

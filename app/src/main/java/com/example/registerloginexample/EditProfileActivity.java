@@ -69,7 +69,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
     private void updateNameOnServer(final String newName) {
-        String url = "http://ruddk658.dothome.co.kr/update_name.php";
+        String url = "http://3.209.169.0/update_name.php";
 
         // JSON 객체 생성 및 이름 데이터 추가
         JSONObject requestData = new JSONObject();

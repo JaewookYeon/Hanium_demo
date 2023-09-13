@@ -297,7 +297,7 @@ public class Add extends AppCompatActivity {
 
 
     private void saveProductToDatabase(int custId, int refId, String productName, String quantity, String expiryDate, String imagePath) {
-        String url = "http://ruddk658.dothome.co.kr/Add.php";
+        String url = "http://3.209.169.0/Add.php";
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
