@@ -37,6 +37,10 @@ public class Frag5 extends Fragment {
     private Button buttonEditProfile;
     private Button buttonContact;
     private Button buttonLogout;
+    private Button buttonEditProfile_right;
+    private Button buttonContact_right;
+    private Button buttonLogout_right;
+
     private String login_id;
     private static final int PICK_IMAGE_REQUEST_CODE = 123; // 임의의 숫자로 설정
     private CircleImageView profileImageView;
@@ -55,10 +59,13 @@ public class Frag5 extends Fragment {
 
         LinearLayout layoutEditUser = view.findViewById(R.id.layout_editUser);
         buttonEditProfile = layoutEditUser.findViewById(R.id.my_editUser);
+        buttonEditProfile_right = layoutEditUser.findViewById(R.id.editUser_right);
         LinearLayout layoutContact = view.findViewById(R.id.layout_contact);
         buttonContact = layoutContact.findViewById(R.id.my_contact);
+        buttonContact_right = layoutContact.findViewById(R.id.my_contact_right);
         LinearLayout layoutLogout = view.findViewById(R.id.layout_logout);
         buttonLogout = layoutLogout.findViewById(R.id.my_logout);
+        buttonLogout_right = layoutLogout.findViewById(R.id.my_logout_right);
 
 
         // 프로필 이미지 아이콘 클릭 시 동작
@@ -99,7 +106,14 @@ public class Frag5 extends Fragment {
             Log.d("Frag5", "Received login_id: " + login_id);
         }
 
-
+        buttonEditProfile_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), VerifyIdentityActivity.class);
+                intent.putExtra("login_id", login_id); // 여기서 login_id를 추가
+                startActivity(intent);
+            }
+        });
         buttonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +122,14 @@ public class Frag5 extends Fragment {
                 startActivity(intent);
             }
         });
+        buttonContact_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(getActivity(), ContactActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +138,14 @@ public class Frag5 extends Fragment {
                 startActivity(intent);
             }
         });
+        buttonLogout_right.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LogoutActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonLogout.setOnClickListener(new View.OnClickListener() {
 
             @Override
