@@ -113,38 +113,42 @@
 
 
     <!-- 정보 수정 버튼 -->
-    <LinearLayout
-        android:id="@+id/layout_editUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
-        android:elevation="0dp">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_edit_user" />
-
-        <Button
-            android:id="@+id/my_editUser"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/layout_editUser"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
-            android:elevation="0dp"
-            android:gravity="start|center_vertical"
-            android:text="정보수정"
-            android:fontFamily="@font/nanumsquareneoregular"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            tools:ignore="HardcodedText" />
+            android:elevation="0dp">
 
-    </LinearLayout>
+            <!-- ">" 버튼 -->
+            <Button
+                android:id="@+id/editUser_right"
+                android:layout_width="53dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/nanumsquareneoregular"
+                android:text=">"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
+            <!-- "정보수정" 버튼 -->
+            <Button
+                android:id="@+id/my_editUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/nanumsquareneoregular"
+                android:text="정보수정"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -161,13 +165,16 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:elevation="0dp">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_contact" />
-
+        <Button
+            android:id="@+id/my_contact_right"
+            android:layout_width="53dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            android:fontFamily="@font/nanumsquareneoregular"
+            android:text=">"
+            android:textColor="@color/black"
+            android:textSize="19sp" />
         <Button
             android:id="@+id/my_contact"
             android:layout_width="0dp"
@@ -175,9 +182,9 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:elevation="0dp"
+            android:fontFamily="@font/nanumsquareneoregular"
             android:gravity="start|center_vertical"
             android:text="문의하기"
-            android:fontFamily="@font/nanumsquareneoregular"
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -199,13 +206,16 @@
             android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:elevation="0dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_logout" />
-
+            <Button
+                android:id="@+id/my_logout_right"
+                android:layout_width="53dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/nanumsquareneoregular"
+                android:text=">"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
             <Button
                 android:id="@+id/my_logout"
                 android:layout_width="0dp"
