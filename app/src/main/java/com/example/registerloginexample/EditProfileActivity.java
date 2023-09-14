@@ -24,8 +24,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private String name;
     private String login_id;
-    private String login_password;
     private String nickname;
+    private String login_password;
     private String phone;
     private String address;
 

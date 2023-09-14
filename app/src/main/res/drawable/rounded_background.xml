@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#00FFFFFF" /> <!-- 배경색 지정 -->
+    <corners android:radius="16dp" /> <!-- 원 모양의 테두리를 위한 반지름 값 지정 -->
+    <stroke
+        android:width="3dp"
+        android:color="#4D2E516E" />
+</shape>

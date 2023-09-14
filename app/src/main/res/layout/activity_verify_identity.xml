@@ -7,32 +7,40 @@
     android:gravity="center_vertical"
     tools:context=".VerifyIdentityActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="359dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/nanumsquareneoregular"
-        android:layout_gravity="center_vertical"
-        android:hint="비밀번호를 입력하세요">
+        android:background="@drawable/rounded_background"
+        android:padding="17dp">
+        >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:inputType="textPassword"
-            android:importantForAccessibility="yes" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:fontFamily="@font/nanumsquareneoregular"
+            android:hint="비밀번호를 입력하세요">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="279dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:importantForAccessibility="yes"
+                android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/buttonVerify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/nanumsquareneoregular"
-        android:text="확인" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonVerify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/nanumsquareneoregular"
+            android:text="확인" />
+    </LinearLayout>
 
 </LinearLayout>

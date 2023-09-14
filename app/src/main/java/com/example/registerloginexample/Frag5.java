@@ -42,6 +42,7 @@ public class Frag5 extends Fragment {
     private Button buttonLogout_right;
 
     private String login_id;
+
     private static final int PICK_IMAGE_REQUEST_CODE = 123; // 임의의 숫자로 설정
     private CircleImageView profileImageView;
     private Uri selectedImageUri; // 선택한 이미지의 Uri 저장
@@ -106,6 +107,7 @@ public class Frag5 extends Fragment {
             Log.d("Frag5", "Received login_id: " + login_id);
         }
 
+
         buttonEditProfile_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,8 +127,8 @@ public class Frag5 extends Fragment {
         buttonContact_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), ContactActivity.class);
+                intent.putExtra("login_id", login_id); // 여기서 login_id를 추가
                 startActivity(intent);
             }
         });
@@ -135,6 +137,7 @@ public class Frag5 extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ContactActivity.class);
+                intent.putExtra("login_id", login_id); // 여기서 login_id를 추가
                 startActivity(intent);
             }
         });
