@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:layout_gravity="center_vertical"
         android:hint="비밀번호를 입력하세요">
 
@@ -31,6 +32,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:text="확인" />
 
 </LinearLayout>
