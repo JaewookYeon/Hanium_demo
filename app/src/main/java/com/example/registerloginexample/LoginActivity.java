@@ -15,9 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView btn_register1;
     private EditText et_id2, et_pass2;
-    private Button btn_login, btn_home;
+    private Button btn_login;
+    private TextView btn_register1, btn_findPass1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,29 @@ public class LoginActivity extends AppCompatActivity {
 
         et_id2 = findViewById(R.id.et_id2);
         et_pass2 = findViewById(R.id.et_pass2);
-        btn_register1 = findViewById(R.id.btn_register1);
         btn_login = findViewById(R.id.btn_login);
+        btn_register1 = findViewById(R.id.btn_register1);
+        btn_findPass1 = findViewById(R.id.btn_findPass1);
 
         // 회원가입 버튼을 클릭 시 수행
         btn_register1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 비밀번호 찾기 버튼을 클릭 시 수행
+        btn_findPass1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, FindPassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -44,6 +62,12 @@ public class LoginActivity extends AppCompatActivity {
                 // EditText에 현재 입력되어 있는 값을 얻어온다.
                 String login_id = et_id2.getText().toString();
                 String login_password = et_pass2.getText().toString();
+
+                // 아이디나 비밀번호가 비어 있는 경우 처리
+                if (login_id.isEmpty() || login_password.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return; // 입력이 비어있으면 로그인 시도를 중단
+                }
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
