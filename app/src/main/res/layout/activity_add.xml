@@ -6,25 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- 이미지 뷰 -->
 
+    <!-- 냉장고 번호 입력란 -->
     <ImageView
         android:id="@+id/photoImageView"
         android:layout_width="208dp"
         android:layout_height="184dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="96dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 냉장고 번호 입력란 -->
     <EditText
         android:id="@+id/refEditText"
         android:layout_width="match_parent"
@@ -73,27 +71,30 @@
         app:layout_constraintTop_toBottomOf="@id/productNameEditText" />
 
     <!-- 유통기한 선택 텍스트 -->
+
+    <!-- 유통기한 선택 버튼 -->
     <TextView
         android:id="@+id/expiryDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="10dp"
         android:text="유통기한: "
 
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toStartOf="@id/expiryDateButton"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quantityEditText" />
 
-    <!-- 유통기한 선택 버튼 -->
+    <!-- 사진 찍기 버튼 -->
     <Button
         android:id="@+id/expiryDateButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="48dp"
         android:text="유통기한 선택"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,6 @@
         app:layout_constraintStart_toEndOf="@id/expiryDateTextView"
         app:layout_constraintTop_toBottomOf="@id/quantityEditText" />
 
-    <!-- 사진 찍기 버튼 -->
     <Button
         android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
         android:layout_marginTop="12dp"
         android:text="저장"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/takePhotoButton" />
 

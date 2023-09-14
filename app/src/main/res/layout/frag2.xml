@@ -61,7 +61,7 @@
 
             <EditText
                 android:id="@+id/search_text"
-                android:layout_width="243dp"
+                android:layout_width="292dp"
                 android:layout_height="49dp"
                 android:background="@drawable/search_background"
                 android:drawableStart="@android:drawable/ic_menu_search"
