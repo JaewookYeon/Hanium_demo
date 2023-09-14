@@ -18,21 +18,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,7 +40,6 @@ import java.util.Locale;
 public class Add extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 672;
-
     private EditText refIdEditText;
     private ImageView photoImageView;
     private EditText productNameEditText;
@@ -53,13 +48,11 @@ public class Add extends AppCompatActivity {
     private Button takePhotoButton;
     private Button saveButton;
     private Button expiryDateButton;
-
     private String imagePath;
-
     private Uri photoUri;
     private Calendar selectedDate = Calendar.getInstance();
-    private int custId; // 로그인 시 받아온 custid 값을 저장
-    private int fk_food_custid; // 수정: fk_food_custid 값을 저장
+    private int custId;
+    private int fk_food_custid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +71,11 @@ public class Add extends AppCompatActivity {
         Intent intent = getIntent();
         int receivedCustId = intent.getIntExtra("custId", -1);
 
-        // 넘어온 custId를 사용하여 custId 값 설정
         if (receivedCustId != -1) {
             custId = receivedCustId;
             Log.d("AddActivity", "Received custId: " + custId);
         }
 
-        // 수정: 넘어온 fk_food_custid 값을 설정
         fk_food_custid = intent.getIntExtra("fk_food_custid", -1);
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +186,6 @@ public class Add extends AppCompatActivity {
                 float scaleWidth = (float) targetWidth / sourceWidth;
                 float scaleHeight = (float) targetHeight / sourceHeight;
 
-                // 이미지의 가로 세로 비율을 유지하면서 크기 조절
                 float scaleFactor = Math.min(scaleWidth, scaleHeight);
                 int finalWidth = (int) (sourceWidth * scaleFactor);
                 int finalHeight = (int) (sourceHeight * scaleFactor);
@@ -216,8 +206,6 @@ public class Add extends AppCompatActivity {
                 selectedDate.set(Calendar.YEAR, year);
                 selectedDate.set(Calendar.MONTH, monthOfYear);
                 selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                // 선택한 날짜를 텍스트 형식으로 표시
                 updateExpiryDateEditText();
             }
         };
@@ -244,32 +232,26 @@ public class Add extends AppCompatActivity {
         String quantity = quantityEditText.getText().toString();
         String expiryDate = expiryDateText.getText().toString();
 
-        // 데이터 유효성 검사
         if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty() || refId <= 0 || !isValidImagePath(imagePath)) {
             Toast.makeText(Add.this, "모든 필수 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 로그인 상태를 확인하고, 로그인이 되어 있을 때만 제품 저장을 시도합니다.
         if (custId != -1 && refId > 0) {
-            // 수정: fk_food_custid 값을 AddRequest에 전달
-            saveProductToDatabase(fk_food_custid, refId, productName, quantity, expiryDate, imagePath);
+            File imageFile = new File(imagePath);
+            saveProductToDatabase(fk_food_custid, refId, productName, quantity, expiryDate, imageFile);
         } else {
-            // 로그인이 되어있지 않을 때 처리
             showLoginRequiredDialog(productName, quantity, expiryDate, imagePath);
         }
     }
 
     private boolean isValidImagePath(String path) {
         String[] validExtensions = {".jpg", ".jpeg", ".png"};
-
-        // 파일 경로가 유효한 확장자로 끝나는지 확인
         for (String extension : validExtensions) {
             if (path.toLowerCase().endsWith(extension)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -277,11 +259,9 @@ public class Add extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("로그인이 필요합니다")
                 .setMessage("제품을 저장하려면 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")
-
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // 로그인 페이지로 이동하는 코드 작성
                         Intent intent = new Intent(Add.this, LoginActivity.class);
                         startActivity(intent);
                     }
@@ -290,9 +270,7 @@ public class Add extends AppCompatActivity {
                 .show();
     }
 
-    private void saveProductToDatabase(int fk_food_custid, int refId, String productName, String quantity, String expiryDate, String imagePath) {
-        String url = "http://3.209.169.0/Add.php";
-
+    private void saveProductToDatabase(int fk_food_custid, int refId, String productName, String quantity, String expiryDate, File imageFile) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -303,12 +281,13 @@ public class Add extends AppCompatActivity {
 
                     if (success) {
                         Toast.makeText(Add.this, message, Toast.LENGTH_SHORT).show();
-                        finish(); // 액티비티 종료
+                        finish();
                     } else {
-                        Toast.makeText(Add.this, "제품 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Add.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(Add.this, "서버 응답을 처리하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -321,10 +300,9 @@ public class Add extends AppCompatActivity {
             }
         };
 
-        // 서버로 데이터 전송을 위한 요청 객체 생성
-        AddRequest addRequest = new AddRequest(fk_food_custid, refId, productName, quantity, expiryDate, imagePath, responseListener, errorListener);
+        AddRequest addRequest = new AddRequest(fk_food_custid, refId, productName, quantity, expiryDate, imageFile, responseListener, errorListener);
 
-        // Volley 요청 큐에 요청 추가
+        // 중요: 요청 큐에 요청을 추가할 때 서버 URL을 사용하세요
         RequestQueue requestQueue = Volley.newRequestQueue(Add.this);
         requestQueue.add(addRequest);
     }

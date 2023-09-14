@@ -1,12 +1,12 @@
 package com.example.registerloginexample;
 
 import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +32,17 @@ public class Frag2 extends Fragment {
     private ImageView btn_add;
 
     private static final int ADD_PRODUCT_REQUEST = 1;
-    private List<ProductItem> addedProductList= new ArrayList<>();
+    private List<ProductItem> addedProductList = new ArrayList<>();
 
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
 
     private LinearLayout previewLayout;
-    private TextView pre_view;
-    private ImageView productImageView;
-
     private TextView refIdTextView;
     private TextView productNameTextView;
     private TextView quantityTextView;
     private TextView expiryDateTextView;
+    private ImageView productImageView;
 
     private Uri photoUri;
 
@@ -58,13 +55,11 @@ public class Frag2 extends Fragment {
         btn_want = view.findViewById(R.id.btn_want);
         btn_add = view.findViewById(R.id.btn_add);
         previewLayout = view.findViewById(R.id.previewLinearLayout);
-        pre_view = view.findViewById(R.id.previewTextView);
-        productImageView = view.findViewById(R.id.productImageView);
-        refIdTextView=view.findViewById(R.id.refIdTextView);
+        refIdTextView = view.findViewById(R.id.refIdTextView);
         productNameTextView = view.findViewById(R.id.productNameTextView);
         quantityTextView = view.findViewById(R.id.quantityTextView);
         expiryDateTextView = view.findViewById(R.id.expiryDateTextView);
-
+        productImageView = view.findViewById(R.id.productImageView);
 
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +79,17 @@ public class Frag2 extends Fragment {
 
         addedProductList = new ArrayList<>();
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
-        productAdapter = new ProductAdapter(addedProductList,getContext());
+        productAdapter = new ProductAdapter(addedProductList, getContext());
         productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         productRecyclerView.setAdapter(productAdapter);
 
+        // 데이터베이스에서 상품 정보를 가져와서 추가
+        List<ProductItem> databaseProducts = getProductsFromDatabase();
+        addedProductList.addAll(databaseProducts);
+        productAdapter.notifyDataSetChanged();
+
         return view;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -101,7 +100,6 @@ public class Frag2 extends Fragment {
             String quantity = data.getStringExtra("quantity");
             String expiryDate = data.getStringExtra("expiryDate");
             photoUri = data.getParcelableExtra("photoUri");
-
 
             boolean isDuplicateRefId = false;
             for (ProductItem item : addedProductList) {
@@ -123,7 +121,63 @@ public class Frag2 extends Fragment {
         }
     }
 
+    private List<ProductItem> getProductsFromDatabase() {
+        List<ProductItem> productList = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            // JDBC 드라이버 로드
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // 데이터베이스 연결 정보 설정 (URL, 사용자 이름, 비밀번호)
+            String dbUrl = "jdbc:mysql://3.209.169.0:3306/hanium_api";
+            String dbUser = "hanium";
+            String dbPassword = "1234";
+
+            // 데이터베이스 연결
+            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+
+            // SQL 쿼리 작성
+            String sql = "SELECT * FROM FOOD";
+            preparedStatement = connection.prepareStatement(sql);
+
+            // 쿼리 실행 및 결과 가져오기
+            resultSet = preparedStatement.executeQuery();
+
+            // 결과 처리
+            while (resultSet.next()) {
+                int refId = resultSet.getInt("ref_id");
+                String productName = resultSet.getString("f_name");
+                String quantity = resultSet.getString("f_count");
+                String expiryDate = resultSet.getString("end_date");
+
+                // ProductItem 객체 생성
+                ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, null); // Uri는 여기서 null로 설정
+
+                // productList에 추가
+                productList.add(productItem);
+
+                Log.d("MyApp", "쿼리 결과 - refId: " + refId + ", productName: " + productName + ", quantity: " + quantity + ", expiryDate: " + expiryDate);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 연결 및 리소스 해제
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return productList;
+    }
 
 
     private void updatePreview(ProductItem productItem) {
@@ -149,5 +203,4 @@ public class Frag2 extends Fragment {
             }
         }
     }
-
 }
