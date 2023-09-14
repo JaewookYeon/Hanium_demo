@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="푸쉐"
+            android:text="Save from"
             android:textSize="30sp"
             app:titleTextAppearance="@font/nanumsquareneobold"
             app:titleTextColor="@color/black" />
