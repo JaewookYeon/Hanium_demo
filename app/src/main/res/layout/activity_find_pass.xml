@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,4 +7,78 @@
     android:layout_height="match_parent"
     tools:context=".FindPassActivity">
 
+    <EditText
+        android:id="@+id/et_idAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="70dp"
+        android:ems="10"
+        android:fontFamily="@font/nanumsquareneoregular"
+        android:hint="아이디를 입력해주세요."
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:text="회원가입 시 선택했던 질문"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_idAnswer"
+        app:layout_constraintStart_toStartOf="@+id/et_idAnswer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_passHintAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:ems="10"
+        android:fontFamily="@font/nanumsquareneoregular"
+        android:hint="입력해주세요."
+        android:inputType="text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/sp_passAnswer"
+        app:layout_constraintStart_toStartOf="@+id/sp_passAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/sp_passAnswer" />
+
+    <Button
+        android:id="@+id/okayButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumsquareneobold"
+        android:text="확인"
+        app:layout_constraintStart_toEndOf="@+id/et_passHintAnswer"
+        app:layout_constraintTop_toTopOf="@+id/et_passHintAnswer"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/okayButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumsquareneobold"
+        android:text="확인"
+        app:layout_constraintStart_toEndOf="@+id/et_idAnswer"
+        app:layout_constraintTop_toTopOf="@+id/et_idAnswer"
+        tools:ignore="HardcodedText" />
+
+    <Spinner
+        android:id="@+id/sp_passAnswer"
+        android:layout_width="264dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/textViewType"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/nanumsquareneoregular"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

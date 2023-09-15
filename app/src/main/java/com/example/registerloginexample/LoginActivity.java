@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_register1 = findViewById(R.id.btn_register1);
         btn_findPass1 = findViewById(R.id.btn_findPass1);
 
-        // 회원가입 버튼을 클릭 시 수행
+        // 회원가입하기 클릭 시 수행
         btn_register1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

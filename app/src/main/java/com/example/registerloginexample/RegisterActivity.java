@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,10 +20,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText et_id, et_pass, et_pass2, et_name, et_nickname, et_phone, et_address;
+    private EditText et_id, et_pass, et_pass2, et_name, et_nickname, et_phone, et_address, et_passHint;
     private Button btn_register, btn_doubleCheck, btn_doubleCheck2;
     private AlertDialog dialog;
+    private Spinner sp_passHint;
+    //private TextView textView3;
     private boolean validate=false;
+
+    String[] items = {"당신의 별명은?", "당신이 나온 초등학교는?", "당신이 가장 좋아하는 음식은?", "당신의 핸드폰 기종은?"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +42,31 @@ public class RegisterActivity extends AppCompatActivity {
         et_nickname = findViewById(R.id.et_nickname);
         et_phone = findViewById(R.id.et_phone);
         et_address = findViewById(R.id.et_address);
+        sp_passHint = findViewById(R.id.sp_passHint);
+        et_passHint = findViewById(R.id.et_passHint);
+        //textView3 = findViewById(R.id.textView3);
+
 
         btn_register = findViewById(R.id.btn_register);
         btn_doubleCheck = findViewById(R.id.btn_doubleCheck);
         btn_doubleCheck2 = findViewById(R.id.btn_doubleCheck2);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, items
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        sp_passHint.setAdapter(adapter);
+        sp_passHint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //textView3.setText(items[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //textView3.setText("선택: ");
+            }
+        });
 
         btn_doubleCheck.setOnClickListener(new View.OnClickListener() {//id중복체크
             @Override
@@ -118,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .setPositiveButton("확인",null)
                                         .create();
                                 dialog.show();
-                                et_id.setEnabled(false);
+                                et_nickname.setEnabled(false);
                                 validate=true;
                                 btn_doubleCheck2.setText("확인");
                             }
@@ -151,6 +180,14 @@ public class RegisterActivity extends AppCompatActivity {
                 final String nickname = et_nickname.getText().toString();
                 final String phone = et_phone.getText().toString();
                 final String address = et_address.getText().toString();
+                final String password_hintNum = String.valueOf(sp_passHint.getSelectedItemPosition());
+                final String password_hint = et_passHint.getText().toString();
+
+                // 아이디, 비밀번호, 이름 등 필수 입력 필드가 비어있는지 확인
+                if (login_id.isEmpty() || login_password.isEmpty() || name.isEmpty() || nickname.isEmpty() || phone.isEmpty() || address.isEmpty() || password_hint.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "모든 정보를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // 비밀번호 일치 여부 확인
                 if (!login_password.equals(et_pass2.getText().toString())) {
@@ -164,25 +201,25 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
+
                             if (success) {
-                                Toast.makeText(getApplicationContext(), "회원등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                // 서버가 "success"가 true를 반환한 경우
+                                Toast.makeText(getApplicationContext(), "회원 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(getApplicationContext(), "회원등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                // 서버가 "success"가 false를 반환한 경우
+                                Toast.makeText(getApplicationContext(), "회원 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "JSON 파싱 오류: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "회원가입 실패: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 };
 
                 // 서버로 Volley를 이용해서 요청
-                RegisterRequest registerRequest = new RegisterRequest(login_id, login_password, name, nickname, phone, address, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(login_id, login_password, name, nickname, phone, address, password_hintNum, password_hint, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
