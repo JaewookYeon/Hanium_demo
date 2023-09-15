@@ -14,9 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edittext_background"
-        android:hint="제목"
+        android:hint="제목을 입력하세요"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:textColor="@android:color/black"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:padding="12dp" />
 
     <EditText
@@ -24,19 +25,10 @@
         android:layout_width="match_parent"
         android:layout_height="122dp"
         android:background="@drawable/rounded_edittext_background"
-        android:hint="내용"
+        android:hint="내용을 입력하세요"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:padding="12dp"
         android:textSize="22sp"
-        android:layout_marginTop="6dp" />
-
-    <EditText
-        android:id="@+id/write_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_edittext_background"
-        android:hint="사용자 이름 or 아이디"
-        android:textSize="16sp"
-        android:padding="12dp"
         android:layout_marginTop="6dp" />
 
     <Button
@@ -44,7 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#87B9DF"
-        android:text="저장"
+        android:text="등록"
+        android:fontFamily="@font/nanumsquareneoregular"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:paddingStart="24dp"

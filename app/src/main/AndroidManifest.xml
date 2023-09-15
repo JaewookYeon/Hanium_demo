@@ -37,14 +37,13 @@
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".WriteActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".Detail"
-            android:exported="false" />
-        <activity
-            android:name=".BoardActivity"
             android:exported="false" />
         <activity
             android:name=".Add"
@@ -55,6 +54,10 @@
         <activity
             android:name=".Frag2"
             android:exported="false" />
+        <activity
+            android:name=".Frag4"
+            android:exported="false" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
