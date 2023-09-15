@@ -1,13 +1,13 @@
 package com.example.registerloginexample;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,15 +41,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_locker:
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("login_id", userId);
+                        frag1.setArguments(bundle1);
                         setFrag(0);
                         break;
                     case R.id.action_refrigerator:
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("login_id", userId);
+                        frag2.setArguments(bundle2);
                         setFrag(1);
                         break;
                     case R.id.action_home:
+                        Bundle bundle3 = new Bundle();
+                        bundle3.putString("login_id", userId);
+                        frag3.setArguments(bundle3);
                         setFrag(2);
                         break;
                     case R.id.action_board:
+                        Bundle bundle4 = new Bundle();
+                        bundle4.putString("login_id", userId);
+                        frag4.setArguments(bundle4);
                         setFrag(3);
                         break;
                     case R.id.action_myPage:

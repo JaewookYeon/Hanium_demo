@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,20 +31,30 @@ import java.util.List;
 
 public class Frag2 extends Fragment {
 
+    private String login_id;
+
     private ImageView btn_want;
+
     private ImageView btn_add;
 
     private static final int ADD_PRODUCT_REQUEST = 1;
+
     private List<ProductItem> addedProductList = new ArrayList<>();
 
     private RecyclerView productRecyclerView;
+
     private ProductAdapter productAdapter;
 
     private LinearLayout previewLayout;
+
     private TextView refIdTextView;
+
     private TextView productNameTextView;
+
     private TextView quantityTextView;
+
     private TextView expiryDateTextView;
+
     private ImageView productImageView;
 
     private Uri photoUri;
@@ -49,7 +62,16 @@ public class Frag2 extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        Bundle bundle2 = getArguments();
+        if (bundle2 != null) {
+            login_id = bundle2.getString("login_id");
+            Log.d("Frag2", "Received login_id: " + login_id);
+        }
+
         View view = inflater.inflate(R.layout.frag2, container, false);
 
         btn_want = view.findViewById(R.id.btn_want);
@@ -61,9 +83,11 @@ public class Frag2 extends Fragment {
         expiryDateTextView = view.findViewById(R.id.expiryDateTextView);
         productImageView = view.findViewById(R.id.productImageView);
 
+
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Frag3", "Received login_id: " + login_id);
                 Intent intent = new Intent(getActivity(), Want.class);
                 startActivity(intent);
             }
@@ -72,6 +96,7 @@ public class Frag2 extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Frag3", "Received login_id: " + login_id);
                 Intent intent = new Intent(getActivity(), Add.class);
                 startActivityForResult(intent, ADD_PRODUCT_REQUEST);
             }

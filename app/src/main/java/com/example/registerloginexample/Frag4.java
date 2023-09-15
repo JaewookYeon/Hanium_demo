@@ -48,9 +48,9 @@ public class Frag4 extends Fragment implements View.OnClickListener {
         mMainRecyclerView.setAdapter(mAdapter);
 
         // login_id를 받아오는 코드 (Frag4 내에서 필요한 경우)
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            login_id = bundle.getString("login_id");
+        Bundle bundle4 = getArguments();
+        if (bundle4 != null) {
+            login_id = bundle4.getString("login_id");
             Log.d("Frag4", "Received login_id: " + login_id);
         }
         return view;

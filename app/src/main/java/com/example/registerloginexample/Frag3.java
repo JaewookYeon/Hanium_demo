@@ -2,12 +2,12 @@ package com.example.registerloginexample;
 
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -21,9 +21,17 @@ public class Frag3 extends Fragment {
     private View view;
     ViewFlipper v_fllipper;
 
+    private String login_id;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            login_id = bundle.getString("login_id");
+            Log.d("Frag3", "Received login_id: " + login_id);
+        }
         view = inflater.inflate(R.layout.frag3, container, false);
 
         announcementText = view.findViewById(R.id.announcementText);
