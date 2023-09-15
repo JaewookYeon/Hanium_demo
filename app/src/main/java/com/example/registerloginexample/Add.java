@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
@@ -18,17 +19,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import com.android.volley.RequestQueue;
+
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -51,8 +58,10 @@ public class Add extends AppCompatActivity {
     private String imagePath;
     private Uri photoUri;
     private Calendar selectedDate = Calendar.getInstance();
-    private int custId;
-    private int fk_food_custid;
+    private int fk_custid;
+    private String login_id = "";
+
+    private String start_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +78,13 @@ public class Add extends AppCompatActivity {
         expiryDateButton = findViewById(R.id.expiryDateButton);
 
         Intent intent = getIntent();
-        int receivedCustId = intent.getIntExtra("custId", -1);
-
-        if (receivedCustId != -1) {
-            custId = receivedCustId;
-            Log.d("AddActivity", "Received custId: " + custId);
+        if (intent != null) {
+            login_id = intent.getStringExtra("login_id");
+            Log.d("Add","Login_id: "+login_id);
         }
 
-        fk_food_custid = intent.getIntExtra("fk_food_custid", -1);
+        // custId 받아오기
+        getCustId();
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +106,39 @@ public class Add extends AppCompatActivity {
                 saveProduct();
             }
         });
+    }
+
+    // getCustidAndStartAddActivity 메서드 추가
+    private void getCustId() {
+        String baseUrl = "http://3.209.169.0/custid.php";
+        String url = baseUrl + "?login_id=" + login_id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            fk_custid = response.getInt("custid");
+                            Log.d("Add", "Received custid: " + fk_custid);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 요청이 실패한 경우 에러 처리를 수행합니다.
+                        Log.e("AddActivity", "Error: " + error.getMessage());
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
     private void requestCameraPermission() {
@@ -220,30 +261,102 @@ public class Add extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    public String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        start_date = dateFormat.format(calendar.getTime());
+        return start_date;
+    }
+
+
     private void updateExpiryDateEditText() {
-        String myFormat = "yyyy-MM-dd";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
-        expiryDateText.setText(sdf.format(selectedDate.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String endDate = sdf.format(selectedDate.getTime());
+        expiryDateText.setText(endDate);
     }
 
     private void saveProduct() {
-        int refId = Integer.parseInt(refIdEditText.getText().toString());
+        String refIdString = refIdEditText.getText().toString();
+
+        if (refIdString.isEmpty()) {
+            // refId가 입력되지 않은 경우 사용자에게 메시지를 표시하거나 다른 처리를 할 수 있음
+            Toast.makeText(Add.this, "refId를 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int refId = Integer.parseInt(refIdString);
         String productName = productNameEditText.getText().toString();
         String quantity = quantityEditText.getText().toString();
-        String expiryDate = expiryDateText.getText().toString();
+        String end_date = expiryDateText.getText().toString();
 
-        if (productName.isEmpty() || expiryDate.isEmpty() || quantity.isEmpty() || refId <= 0 || !isValidImagePath(imagePath)) {
+        start_date = getCurrentDate();
+
+        if (productName.isEmpty() || end_date.isEmpty() || quantity.isEmpty() || !isValidImagePath(imagePath)) {
             Toast.makeText(Add.this, "모든 필수 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (custId != -1 && refId > 0) {
-            File imageFile = new File(imagePath);
-            saveProductToDatabase(fk_food_custid, refId, productName, quantity, expiryDate, imageFile);
-        } else {
-            showLoginRequiredDialog(productName, quantity, expiryDate, imagePath);
-        }
+        // GET 요청을 보내는 코드 추가
+        sendGetRequest(fk_custid, productName, start_date, end_date, refId, quantity, new File(imagePath));
     }
+
+    private void sendGetRequest(int fk_custid, String productName, String start_date, String expiryDate, int refId, String quantity, File imagePath) {
+        // URL과 파라미터를 조합하여 완전한 GET 요청 URL을 생성합니다.
+        String baseUrl = "http://3.209.169.0/Add.php";
+        String url = baseUrl
+                + "?f_name=" + productName
+                + "&start_date=" + start_date
+                + "&end_date=" + expiryDate
+                + "&ref_id=" + refId
+                + "&fk_custid=" + fk_custid
+                + "&f_count=" + quantity
+                + "&f_image=" + imagePath; // f_image 파라미터 추가
+
+        Log.d("Add_server", "fk_custid: " + fk_custid);
+        Log.d("Add_server", "f_name: " + productName);
+        Log.d("Add_server", "start_date: " + start_date);
+        Log.d("Add_server", "end_date: " + expiryDate);
+        Log.d("Add_server", "ref_id: " + refId);
+        Log.d("Add_server", "f_count: " + quantity);
+        Log.d("Add_server", "f_image: " + imagePath.getAbsolutePath()); // 파일 경로를 로깅
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // 서버 응답을 처리합니다.
+                        try {
+                            boolean success = response.getBoolean("success");
+                            String message = response.getString("message");
+
+                            if (success) {
+                                Toast.makeText(Add.this, "상품이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(Add.this, "상품 저장에 실패하였습니다. " + message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Add.this, "서버 응답을 처리 오류가 발생", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 더 자세한 오류 메시지 출력
+                        Toast.makeText(Add.this, "서버 응답을 처리하는 동안 에러가 발생했습니다. 오류: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(this).add(request);
+    }
+
 
     private boolean isValidImagePath(String path) {
         String[] validExtensions = {".jpg", ".jpeg", ".png"};
@@ -270,40 +383,12 @@ public class Add extends AppCompatActivity {
                 .show();
     }
 
-    private void saveProductToDatabase(int fk_food_custid, int refId, String productName, String quantity, String expiryDate, File imageFile) {
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    String message = jsonResponse.getString("message");
-
-                    if (success) {
-                        Toast.makeText(Add.this, message, Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(Add.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(Add.this, "서버 응답을 처리하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add.this, "서버와 통신 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
-            }
-        };
-
-        AddRequest addRequest = new AddRequest(fk_food_custid, refId, productName, quantity, expiryDate, imageFile, responseListener, errorListener);
-
-        // 중요: 요청 큐에 요청을 추가할 때 서버 URL을 사용하세요
-        RequestQueue requestQueue = Volley.newRequestQueue(Add.this);
-        requestQueue.add(addRequest);
+    private String convertImageFileToBase64(File imageFile) {
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
+
 }
