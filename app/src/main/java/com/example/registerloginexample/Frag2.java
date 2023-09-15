@@ -87,7 +87,6 @@ public class Frag2 extends Fragment {
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Frag3", "Received login_id: " + login_id);
                 Intent intent = new Intent(getActivity(), Want.class);
                 startActivity(intent);
             }
@@ -96,9 +95,10 @@ public class Frag2 extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Frag3", "Received login_id: " + login_id);
                 Intent intent = new Intent(getActivity(), Add.class);
-                startActivityForResult(intent, ADD_PRODUCT_REQUEST);
+                intent.putExtra("login_id", login_id); // 여기서 login_id를 추가
+                startActivity(intent);
+
             }
         });
 
