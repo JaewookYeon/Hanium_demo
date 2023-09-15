@@ -26,6 +26,21 @@ public class Frag4 extends Fragment implements View.OnClickListener {
     private FloatingActionButton mMainWriteButton; // FloatingActionButton 변수 추가
 
     private String login_id; // Frag4 내에서 사용하는 변수
+    // 데이터베이스에서 게시물 데이터를 가져오는 메서드
+    private void loadBoardDataFromDatabase() {
+        // 데이터베이스에서 게시물 데이터를 가져오는 코드를 작성합니다.
+        // 이 부분은 데이터베이스 연동 방법에 따라 다를 수 있습니다.
+
+        // 예시: 가져온 데이터를 mBoardList에 추가합니다.
+        //List<Board> boardData = getBoardDataFromDatabase(); // 데이터베이스에서 데이터 가져오기
+        //mBoardList.addAll(boardData); // 가져온 데이터를 mBoardList에 추가
+        //mAdapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
+    }
+
+    //private List<Board> getBoardDataFromDatabase() {
+    //}
+
+    // loadBoardDataFromDatabase() 메서드를 onCreateView() 내에서 호출합니다.
 
     @Nullable
     @Override
