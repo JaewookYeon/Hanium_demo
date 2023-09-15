@@ -1,6 +1,9 @@
 package com.example.registerloginexample;
 
 import static android.app.Activity.RESULT_OK;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,51 +23,44 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frag2 extends Fragment {
 
     private String login_id;
-
     private ImageView btn_want;
-
     private ImageView btn_add;
-
     private static final int ADD_PRODUCT_REQUEST = 1;
-
     private List<ProductItem> addedProductList = new ArrayList<>();
-
     private RecyclerView productRecyclerView;
-
     private ProductAdapter productAdapter;
-
     private LinearLayout previewLayout;
-
     private TextView refIdTextView;
-
     private TextView productNameTextView;
-
     private TextView quantityTextView;
-
     private TextView expiryDateTextView;
-
     private ImageView productImageView;
-
     private Uri photoUri;
-
     private static final int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 
         Bundle bundle2 = getArguments();
         if (bundle2 != null) {
@@ -83,7 +79,6 @@ public class Frag2 extends Fragment {
         expiryDateTextView = view.findViewById(R.id.expiryDateTextView);
         productImageView = view.findViewById(R.id.productImageView);
 
-
         btn_want.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,9 +91,8 @@ public class Frag2 extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Add.class);
-                intent.putExtra("login_id", login_id); // 여기서 login_id를 추가
-                startActivity(intent);
-
+                intent.putExtra("login_id", login_id);
+                startActivityForResult(intent, ADD_PRODUCT_REQUEST); // startActivityForResult로 Add 액티비티를 호출
             }
         });
 
@@ -108,14 +102,69 @@ public class Frag2 extends Fragment {
         productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         productRecyclerView.setAdapter(productAdapter);
 
-        // 데이터베이스에서 상품 정보를 가져와서 추가
-        List<ProductItem> databaseProducts = getProductsFromDatabase();
-        addedProductList.addAll(databaseProducts);
-        productAdapter.notifyDataSetChanged();
+
+        getProductsFromServer();
 
         return view;
     }
+    static class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+        private final List<ProductItem> productList;
+        private final Context context;
 
+        public ProductAdapter(List<ProductItem> productList, Context context) {
+            this.productList = productList;
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
+            return new ProductViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+            Log.d("ProductAdapter", "onBindViewHolder called for position: " + position); // 추가한 로그
+            ProductItem productItem = productList.get(position);
+
+            if (productItem.getImageUri() != null) {
+                Glide.with(context)
+                        .load(productItem.getImageUri())
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_settings))
+                        .into(holder.productImageView);
+            } else {
+                holder.productImageView.setImageDrawable(null);
+            }
+
+            holder.productNameTextView.setText("상품 이름: " + productItem.getProductName()); // 상품 이름 앞에 "상품 이름: "을 붙임
+            holder.quantityTextView.setText("수량: " + productItem.getQuantity()); // 수량 앞에 "수량: "을 붙임
+            holder.expiryDateTextView.setText("유통기한: " + productItem.getExpiryDate()); // 유통기한 앞에 "유통기한: "을 붙임
+        }
+
+        @Override
+        public int getItemCount() {
+            return productList.size();
+        }
+
+        static class ProductViewHolder extends RecyclerView.ViewHolder {
+            ImageView productImageView;
+            TextView refIdTextView;
+            TextView productNameTextView;
+            TextView quantityTextView;
+            TextView expiryDateTextView;
+
+            public ProductViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                refIdTextView = itemView.findViewById(R.id.refIdTextView);
+                productImageView = itemView.findViewById(R.id.productImageView);
+                productNameTextView = itemView.findViewById(R.id.productNameTextView);
+                quantityTextView = itemView.findViewById(R.id.quantityTextView);
+                expiryDateTextView = itemView.findViewById(R.id.expiryDateTextView);
+            }
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,74 +187,89 @@ public class Frag2 extends Fragment {
                 Toast.makeText(getContext(), "중복된 refId입니다. 다른 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             } else {
                 ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, photoUri);
-                addedProductList.add(0, productItem); // 새로운 항목을 리스트의 맨 앞에 추가
-                productAdapter.notifyItemInserted(0); // 어댑터에 항목 추가 알림
+                addedProductList.add(0, productItem);
+                productAdapter.notifyItemInserted(0);
+
+                Log.d("Frag2", "Added new product: " + productItem.getProductName());
+
                 updatePreview(productItem);
-                productRecyclerView.scrollToPosition(0); // 스크롤을 맨 위로 이동
+                productRecyclerView.scrollToPosition(0);
             }
         }
     }
 
-    private List<ProductItem> getProductsFromDatabase() {
-        List<ProductItem> productList = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+    private void getProductsFromServer() {
+        // 서버에서 데이터 가져오는 코드를 넣으세요.
+        String url = "http://3.209.169.0/get_products.php";
 
-        try {
-            // JDBC 드라이버 로드
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            List<ProductItem> productList = new ArrayList<>();
 
-            // 데이터베이스 연결 정보 설정 (URL, 사용자 이름, 비밀번호)
-            String dbUrl = "jdbc:mysql://3.209.169.0:3306/hanium_api";
-            String dbUser = "hanium";
-            String dbPassword = "1234";
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject productObject = response.getJSONObject(i);
+                                int refId = productObject.getInt("ref_id");
+                                String productName = productObject.getString("f_name");
+                                String quantity = productObject.getString("f_count");
+                                String expiryDate = productObject.getString("end_date");
 
-            // 데이터베이스 연결
-            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+                                ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, null);
+                                productList.add(productItem);
 
-            // SQL 쿼리 작성
-            String sql = "SELECT * FROM FOOD";
-            preparedStatement = connection.prepareStatement(sql);
+                                Log.d("Frag2", "refId: " + refId);
+                                Log.d("Frag2", "productName: " + productName);
+                                Log.d("Frag2", "quantity: " + quantity);
+                                Log.d("Frag2", "expiryDate: " + expiryDate);
 
-            // 쿼리 실행 및 결과 가져오기
-            resultSet = preparedStatement.executeQuery();
+                            }
 
-            // 결과 처리
-            while (resultSet.next()) {
-                int refId = resultSet.getInt("ref_id");
-                String productName = resultSet.getString("f_name");
-                String quantity = resultSet.getString("f_count");
-                String expiryDate = resultSet.getString("end_date");
 
-                // ProductItem 객체 생성
-                ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, null); // Uri는 여기서 null로 설정
+                            // 서버에서 받아온 데이터로 어댑터 업데이트
+                            addedProductList.addAll(productList);
+                            productAdapter.notifyDataSetChanged();
 
-                // productList에 추가
-                productList.add(productItem);
+                            Log.d("Frag2", "서버에서 데이터를 성공적으로 파싱했습니다.");
 
-                Log.d("MyApp", "쿼리 결과 - refId: " + refId + ", productName: " + productName + ", quantity: " + quantity + ", expiryDate: " + expiryDate);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 연결 및 리소스 해제
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "JSON 파싱 오류", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
 
-        return productList;
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            String errorMessage = new String(error.networkResponse.data);
+
+                            Log.e("ServerResponseError", "HTTP 상태 코드: " + statusCode);
+                            Log.e("ServerResponseError", "오류 메시지: " + errorMessage);
+                        } else {
+                            Log.e("ServerResponseError", "네트워크 응답 오류 발생");
+                        }
+
+                        Toast.makeText(getContext(), "서버 응답 오류", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+        );
+
+        Volley.newRequestQueue(getContext()).add(request);
     }
 
 
     private void updatePreview(ProductItem productItem) {
+
         if (addedProductList.isEmpty()) {
             previewLayout.setVisibility(View.GONE);
         } else {
