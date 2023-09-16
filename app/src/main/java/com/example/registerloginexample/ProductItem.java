@@ -1,5 +1,6 @@
 package com.example.registerloginexample;
 
+
 import android.net.Uri;
 
 public class ProductItem {
@@ -9,15 +10,19 @@ public class ProductItem {
     private String expiryDate;
     private Uri imageUri;
 
-    public ProductItem(Integer refId,String productName, String quantity, String expiryDate, Uri imageUri) {
-        this.refId=refId;
+
+    public ProductItem(Integer refId, String productName, String quantity, String expiryDate, Uri imageUri) {
+        this.refId = refId;
         this.productName = productName;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
         this.imageUri = imageUri;
     }
 
-    public Integer getRefId(){return refId;}
+    public Integer getRefId() {
+        return refId;
+    }
+
     public String getProductName() {
         return productName;
     }

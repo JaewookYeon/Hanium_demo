@@ -301,6 +301,7 @@ public class Add extends AppCompatActivity {
     }
 
     private void sendGetRequest(int fk_custid, String productName, String start_date, String expiryDate, int refId, String quantity, File imagePath) {
+        Log.d("Add_server", "f_image: " + imagePath.getAbsolutePath());
         // URL과 파라미터를 조합하여 완전한 GET 요청 URL을 생성합니다.
         String baseUrl = "http://3.209.169.0/Add.php";
         String url = baseUrl
