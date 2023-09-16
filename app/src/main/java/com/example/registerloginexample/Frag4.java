@@ -1,5 +1,6 @@
 package com.example.registerloginexample;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,9 +15,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -32,10 +40,13 @@ public class Frag4 extends Fragment implements View.OnClickListener {
 
     private RecyclerView mMainRecyclerView;
     private MainAdapter mAdapter;
-    private List<Board> mBoardList;
+    private List<Board> mBoardList = new ArrayList<>();
     private FloatingActionButton mMainWriteButton; // FloatingActionButton 변수 추가
-
     private String login_id; // Frag4 내에서 사용하는 변수
+
+    public interface VolleyCallback {
+        void onSuccess(String result);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +57,7 @@ public class Frag4 extends Fragment implements View.OnClickListener {
     }
 
     // AsyncTask로 서버에서 데이터 가져오기
+    // AsyncTask로 서버에서 데이터 가져오기
     private class GetDataFromServer extends AsyncTask<String, Void, List<Board>> {
         @Override
         protected List<Board> doInBackground(String... params) {
@@ -54,16 +66,27 @@ public class Frag4 extends Fragment implements View.OnClickListener {
                 String url = params[0];
                 String jsonData = fetchDataFromUrl(url);
 
+                Log.d("Frag4", "Received JSON Data: " + jsonData); // JSON 데이터를 로그에 출력
+
                 JSONArray jsonArray = new JSONArray(jsonData);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String id = jsonObject.getString("b_id");
                     String title = jsonObject.getString("b_title");
                     String content = jsonObject.getString("b_content");
-                    String name = jsonObject.getString("custid");
+                    String custid = jsonObject.getString("custid");
 
-                    Board board = new Board(id, title, content, name);
-                    boardList.add(board);
+                    getNicknameFromCustid(custid, new VolleyCallback() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void onSuccess(String name) {
+                            Log.d("Frag4", "Received name: " + name);
+                            // 닉네임을 받아온 후에 Board 객체 생성
+                            Board board = new Board(id, title, content, name);
+                            boardList.add(board);
+                            mAdapter.notifyDataSetChanged(); // 어댑터에 변경 알림
+                        }
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,15 +96,59 @@ public class Frag4 extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(List<Board> result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(List<Board> boardList) {
+            super.onPostExecute(boardList);
 
-            // 가져온 데이터를 mBoardList에 추가하고 어댑터에 알립니다.
-            mBoardList.clear();
-            mBoardList.addAll(result);
-            mAdapter.notifyDataSetChanged();
+            // 가져온 데이터를 어댑터에 설정
+            mAdapter = new MainAdapter(boardList); // 어댑터 초기화
+            mMainRecyclerView.setAdapter(mAdapter); // 어댑터 설정
+        }
+
+
+
+    private void getNicknameFromCustid(String custid, final VolleyCallback callback) {
+            String baseUrl = "http://3.209.169.0/nickname.php";
+            String url = baseUrl + "?custid=" + custid;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String nickname = response.getString("nickname");
+                                callback.onSuccess(nickname); // 닉네임을 콜백으로 전달
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // 요청이 실패한 경우 에러 처리를 수행합니다.
+                            Log.e("Frag4", "Error: " + error.getMessage());
+                        }
+                    }
+            );
+
+            if (getContext() != null) {
+                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                // 나머지 코드
+            } else {
+                // 컨텍스트가 null인 경우 처리
+                Log.e("Frag4", "Context is null");
+            }
+
+            // 요청을 큐에 추가
+            // 다른 곳에서 정의된 RequestQueue 객체가 있다고 가정합니다.
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext()); // RequestQueue 초기화
+            requestQueue.add(jsonObjectRequest);
         }
     }
+
 
     // fetchDataFromUrl 메서드도 그대로 사용합니다.
     private String fetchDataFromUrl(String urlString) throws IOException {
@@ -160,12 +227,14 @@ public class Frag4 extends Fragment implements View.OnClickListener {
 
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();
         // AsyncTask를 실행하여 데이터를 다시 가져옵니다.
         new GetDataFromServer().execute("http://3.209.169.0/getJson.php");
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.main_write_button) {
