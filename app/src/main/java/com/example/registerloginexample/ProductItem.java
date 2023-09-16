@@ -1,22 +1,22 @@
 package com.example.registerloginexample;
 
 
-import android.net.Uri;
+import android.graphics.Bitmap;
 
 public class ProductItem {
     private int refId;
     private String productName;
     private String quantity;
     private String expiryDate;
-    private Uri imageUri;
+    private Bitmap imageBitmap;
 
 
-    public ProductItem(Integer refId, String productName, String quantity, String expiryDate, Uri imageUri) {
+    public ProductItem(Integer refId, String productName, String quantity, String expiryDate, Bitmap imageUri) {
         this.refId = refId;
         this.productName = productName;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
-        this.imageUri = imageUri;
+        this.imageBitmap = imageBitmap;
     }
 
     public Integer getRefId() {
@@ -35,10 +35,7 @@ public class ProductItem {
         return expiryDate;
     }
 
-    public Uri getImageUri() {
-        return imageUri;
+    public Bitmap getImageBitmap() {
+        return imageBitmap; // 이미지 비트맵 반환
     }
-
-
-
 }

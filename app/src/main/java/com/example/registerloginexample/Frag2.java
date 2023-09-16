@@ -2,6 +2,7 @@ package com.example.registerloginexample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -104,13 +106,10 @@ public class Frag2 extends Fragment {
         public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
             ProductItem productItem = productList.get(position);
 
-            if (productItem.getImageUri() != null) {
-                Glide.with(context)
-                        .load(productItem.getImageUri())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_settings))
-                        .into(holder.productImageView);
+            if (productItem.getImageBitmap() != null) {
+                holder.productImageView.setImageBitmap(productItem.getImageBitmap());
             } else {
-                holder.productImageView.setImageDrawable(null);
+                holder.productImageView.setImageResource(R.drawable.ic_settings); // 기본 이미지 설정
             }
 
             holder.refIdTextView.setText("냉장고 번호: " + productItem.getRefId());
@@ -143,43 +142,6 @@ public class Frag2 extends Fragment {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_PRODUCT_REQUEST && resultCode == getActivity().RESULT_OK && data != null) {
-            Integer refId = data.getIntExtra("refId", 0);
-            String productName = data.getStringExtra("productName");
-            String quantity = data.getStringExtra("quantity");
-            String expiryDate = data.getStringExtra("expiryDate");
-            photoUri = data.getParcelableExtra("photoUri");
-
-            boolean isDuplicateRefId = false;
-            for (ProductItem item : addedProductList) {
-                if (item.getRefId() == refId) {
-                    isDuplicateRefId = true;
-                    break;
-                }
-            }
-
-            if (isDuplicateRefId) {
-                Toast.makeText(getContext(), "중복된 냉장고 번호입니다. 다른 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
-            } else {
-                try {
-                    ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, photoUri);
-                    addedProductList.add(0, productItem);
-                    productAdapter.notifyItemInserted(0);
-
-                    Log.d("Frag2", "Added new product: " + productItem.getProductName());
-
-                    productRecyclerView.scrollToPosition(0);
-                } catch (Exception e) {
-                    // 어떤 예외가 발생하는지 로그로 출력
-                    Log.e("Frag2", "Error while adding a new product", e);
-                }
-            }
-        }
-    }
-
     private void getProductsFromServer() {
         String url = "http://3.209.169.0/get_products.php";
 
@@ -199,9 +161,20 @@ public class Frag2 extends Fragment {
                                 String productName = productObject.getString("f_name");
                                 String quantity = productObject.getString("f_count");
                                 String expiryDate = productObject.getString("end_date");
+                                String imageUrl = productObject.getString("image_url"); // 이미지 URL 가져오기
 
-                                ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, null);
-                                addedProductList.add(productItem);
+                                // ImageRequest를 사용하여 이미지를 가져오고 표시
+                                ImageRequest imageRequest = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+                                    @Override
+                                    public void onResponse(Bitmap bitmap) {
+                                        ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, bitmap);
+                                        addedProductList.add(productItem);
+                                        productAdapter.notifyDataSetChanged(); // 어댑터를 업데이트합니다.
+                                    }
+                                }, 0, 0, null, null);
+
+                                // 이미지 요청을 큐에 추가
+                                Volley.newRequestQueue(getContext()).add(imageRequest);
 
                                 Log.d("Frag2", "서버 응답: " + response.toString());
                                 Log.d("Frag2", "refId: " + refId);
@@ -209,13 +182,9 @@ public class Frag2 extends Fragment {
                                 Log.d("Frag2", "quantity: " + quantity);
                                 Log.d("Frag2", "expiryDate: " + expiryDate);
                             }
-
-                            productAdapter.notifyDataSetChanged(); // 어댑터를 업데이트합니다.
-
-                            Log.d("Frag2", "서버에서 데이터를 성공적으로 파싱했습니다.");
-
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("JSONParsingError", "JSON 파싱 오류: " + e.getMessage());
                             Toast.makeText(getContext(), "JSON 파싱 오류", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -236,6 +205,8 @@ public class Frag2 extends Fragment {
                     }
                 }
         );
+
+        // Volley 요청 큐에 추가
         Volley.newRequestQueue(getContext()).add(request);
     }
 }

@@ -391,5 +391,4 @@ public class Add extends AppCompatActivity {
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
-
 }
