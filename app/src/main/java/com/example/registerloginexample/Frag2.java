@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,13 +161,18 @@ public class Frag2 extends Fragment {
             if (isDuplicateRefId) {
                 Toast.makeText(getContext(), "중복된 refId입니다. 다른 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             } else {
-                ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, photoUri);
-                addedProductList.add(0, productItem);
-                productAdapter.notifyItemInserted(0);
+                try {
+                    ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, photoUri);
+                    addedProductList.add(0, productItem);
+                    productAdapter.notifyItemInserted(0);
 
-                Log.d("Frag2", "Added new product: " + productItem.getProductName());
+                    Log.d("Frag2", "Added new product: " + productItem.getProductName());
 
-                productRecyclerView.scrollToPosition(0);
+                    productRecyclerView.scrollToPosition(0);
+                } catch (Exception e) {
+                    // 어떤 예외가 발생하는지 로그로 출력
+                    Log.e("Frag2", "Error while adding a new product", e);
+                }
             }
         }
     }
@@ -196,6 +200,7 @@ public class Frag2 extends Fragment {
                                 ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, null);
                                 addedProductList.add(productItem);
 
+                                Log.d("Frag2", "서버 응답: " + response.toString());
                                 Log.d("Frag2", "refId: " + refId);
                                 Log.d("Frag2", "productName: " + productName);
                                 Log.d("Frag2", "quantity: " + quantity);
@@ -216,22 +221,18 @@ public class Frag2 extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-
                         if (error.networkResponse != null) {
                             int statusCode = error.networkResponse.statusCode;
                             String errorMessage = new String(error.networkResponse.data);
-
                             Log.e("ServerResponseError", "HTTP 상태 코드: " + statusCode);
                             Log.e("ServerResponseError", "오류 메시지: " + errorMessage);
                         } else {
                             Log.e("ServerResponseError", "네트워크 응답 오류 발생");
                         }
-
                         Toast.makeText(getContext(), "서버 응답 오류", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
-
         Volley.newRequestQueue(getContext()).add(request);
     }
 }
