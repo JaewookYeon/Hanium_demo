@@ -113,6 +113,7 @@ public class Frag2 extends Fragment {
                 holder.productImageView.setImageDrawable(null);
             }
 
+            holder.refIdTextView.setText("냉장고 번호: " + productItem.getRefId());
             holder.productNameTextView.setText("상품 이름: " + productItem.getProductName());
             holder.quantityTextView.setText("수량: " + productItem.getQuantity());
             holder.expiryDateTextView.setText("유통기한: " + productItem.getExpiryDate());
@@ -125,6 +126,7 @@ public class Frag2 extends Fragment {
 
         static class ProductViewHolder extends RecyclerView.ViewHolder {
             ImageView productImageView;
+            TextView refIdTextView;
             TextView productNameTextView;
             TextView quantityTextView;
             TextView expiryDateTextView;
@@ -133,6 +135,7 @@ public class Frag2 extends Fragment {
                 super(itemView);
 
                 productImageView = itemView.findViewById(R.id.productImageView);
+                refIdTextView = itemView.findViewById(R.id.refIdTextView);
                 productNameTextView = itemView.findViewById(R.id.productNameTextView);
                 quantityTextView = itemView.findViewById(R.id.quantityTextView);
                 expiryDateTextView = itemView.findViewById(R.id.expiryDateTextView);
@@ -159,7 +162,7 @@ public class Frag2 extends Fragment {
             }
 
             if (isDuplicateRefId) {
-                Toast.makeText(getContext(), "중복된 refId입니다. 다른 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "중복된 냉장고 번호입니다. 다른 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     ProductItem productItem = new ProductItem(refId, productName, quantity, expiryDate, photoUri);
