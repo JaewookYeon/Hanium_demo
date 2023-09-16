@@ -8,7 +8,7 @@
     android:background="#FFFFFF"
     tools:context=".Frag2">
 
-
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_toolbar"
         android:layout_width="0dp"
@@ -29,84 +29,86 @@
             app:titleTextColor="@color/black" />
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Linear Layout -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!-- Heart Button -->
+        <ImageButton
+            android:id="@+id/btn_want"
+            android:layout_width="66dp"
+            android:layout_height="65dp"
+            android:backgroundTint="#ececec"
+            android:paddingStart="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/heart" />
 
-            <ImageButton
-                android:id="@+id/btn_want"
-                android:layout_width="57dp"
-                android:layout_height="match_parent"
-                android:backgroundTint="#ececec"
-                android:paddingStart="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/heart" />
+        <!-- Add Button -->
+        <ImageButton
+            android:id="@+id/btn_add"
+            android:layout_width="66dp"
+            android:layout_height="65dp"
+            android:backgroundTint="#ececec"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/ic_input_add" />
 
-            <ImageButton
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="#ececec"
-                android:scaleType="fitXY"
-                android:src="@android:drawable/ic_input_add" />
-
-            <EditText
-                android:id="@+id/search_text"
-                android:layout_width="292dp"
-                android:layout_height="49dp"
-                android:background="@drawable/search_background"
-                android:drawableStart="@android:drawable/ic_menu_search"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:hint="Find foods"
-                android:inputType="text"
-                android:paddingStart="10dp"
-                android:paddingEnd="5dp"
-                android:textSize="14sp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/previewLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-            <include layout="@layout/item_product" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <!-- Search EditText -->
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="275dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/previewLinearLayout">
-
-            <!-- 추가할 프래그먼트의 레이아웃을 포함하는 뷰 -->
-
-        </FrameLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/productRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/fragment_container"
-            app:layout_constraintTop_toBottomOf="@id/previewLinearLayout" />
-
+            android:background="@drawable/search_background"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Find foods"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:textSize="14sp"
+            android:textStyle="italic" />
     </LinearLayout>
+
+    <!-- Item Product Layout -->
+    <include
+        android:id="@+id/item_product"
+        layout="@layout/item_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <!-- Frame Layout -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_product"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <!-- 추가할 프래그먼트의 레이아웃을 포함하는 뷰 -->
+    </FrameLayout>
+
+    <!-- Product RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/item_product"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
