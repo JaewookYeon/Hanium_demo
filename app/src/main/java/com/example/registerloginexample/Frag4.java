@@ -160,7 +160,12 @@ public class Frag4 extends Fragment implements View.OnClickListener {
 
         return view;
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        // AsyncTask를 실행하여 데이터를 다시 가져옵니다.
+        new GetDataFromServer().execute("http://3.209.169.0/getJson.php");
+    }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.main_write_button) {

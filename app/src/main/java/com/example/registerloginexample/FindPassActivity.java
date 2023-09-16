@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -111,8 +110,8 @@ public class FindPassActivity extends AppCompatActivity {
                         }
                     }
                 };
-                ValidateRequest validateRequest=new ValidateRequest(login_id,responseListener);
-                RequestQueue queue= Volley.newRequestQueue(FindPassActivity.this);
+                ValidateRequest validateRequest = new ValidateRequest(login_id, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(FindPassActivity.this);
                 queue.add(validateRequest);
             }
         });
@@ -121,18 +120,15 @@ public class FindPassActivity extends AppCompatActivity {
         okayButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 사용자가 선택한 배열 번호
-                //int selectedPosition = sp_passAnswer.getSelectedItemPosition();
-
-                // 사용자가 입력한 답변
+                String login_id = et_idAnswer.getText().toString();
                 String userAnswer = et_passHintAnswer.getText().toString();
 
-                // 서버에서 비밀번호 관련 정보를 가져오는 요청을 보낼 URL
+                // 서버에서 정보를 가져오는 요청을 보낼 URL
                 String url = "http://3.209.169.0/get_password.php";
 
                 JSONObject requestData = new JSONObject();
                 try {
-                    requestData.put("userAnswer", userAnswer); // 사용자가 입력한 값 전송
+                    requestData.put("login_id", login_id); // 사용자가 입력한 id 전송
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -141,13 +137,16 @@ public class FindPassActivity extends AppCompatActivity {
                     try {
                         // 서버에서 받은 JSON 응답에서 필요한 정보 추출
                         String login_password = response.getString("login_password");
-                        String password_hintNum = response.getString("password_hintNum");
                         String password_hint = response.getString("password_hint");
+                        String password_hintNum = response.getString("password_hintNum");
 
+                        Log.d("MyApp", "response: " + response.toString());
                         Log.d("MyApp", "login_password: " + login_password);
                         Log.d("MyApp", "password_hint: " + password_hint);
+                        Log.d("MyApp", "password_hintNum: " + password_hintNum);
                         Log.d("MyApp", "userAnswer: " + userAnswer);
                         Log.d("MyApp", "requestData: " + requestData);
+
                         // 가져온 정보를 사용하여 일치 여부 확인
                         if (!TextUtils.isEmpty(password_hint) && password_hint.equals(userAnswer)) {
                             showPasswordDialog(login_password); // 비밀번호를 사용자에게 보여주는 다이얼로그 표시
@@ -159,12 +158,12 @@ public class FindPassActivity extends AppCompatActivity {
                 }, error -> showNetworkErrorToast());
 
                 Volley.newRequestQueue(FindPassActivity.this).add(request);
+
             }
         });
-
     }
 
-    // 비밀번호를 사용자에게 보여주는 다이얼로그 표시
+        // 비밀번호를 사용자에게 보여주는 다이얼로그 표시
     private void showPasswordDialog(String password) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("비밀번호는 '" + password + "' 입니다.");
